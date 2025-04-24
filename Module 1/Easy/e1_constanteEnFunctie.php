@@ -1,7 +1,7 @@
 <?php
 define("PI", 3.1415);
 
-function calculateSurfaceArea($radius): float {
+function calculateSurfaceAreaCirkel($radius): float {
 	$surfaceArea = PI * $radius * $radius;
 	return $surfaceArea;
 }

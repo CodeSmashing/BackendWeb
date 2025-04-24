@@ -10,11 +10,11 @@
 </head>
 
 <body>
-	<input type="hidden" id="assignment" value="e1" disabled>
+	<input type="hidden" id="assignment" value="e2" disabled>
 
-	<section>
+	<section class="minimized">
 		<button class="minimize"></button>
-		<h1><strong>E1:</strong> Constante en Functie</h1>
+		<h2><strong>E1:</strong> Constante en Functie</h2>
 		<p>
 			Schrijf een functie met de naam berekenOppervlakteCirkel die de oppervlakte van een cirkel berekent.
 			Deze functie moet één parameters hebben, straal.
@@ -27,9 +27,44 @@
 		</p>
 
 		<section class="results-container">
-			<span>De oppervlakte van een cirkel met een straal van <span id="radius" data-value="3"></span> is: 
-				<span id="result-e1"></span>
-			</span>
+			<p>
+				De oppervlakte van een cirkel met een straal van <span id="radius" data-value="3"></span> is: <span id="result-e1"></span>
+			</p>
+		</section>
+		<hr>
+	</section>
+	<section>
+		<button class="minimize"></button>
+		<h2><strong>E2:</strong> Meetkunde</h2>
+		<p>We bouwen verder op de functie van E1 en gaan de volgende functies toevoegen:</p>
+		<ul>
+			<li>
+				<p>berekenOppervlakteRechthoek(zijde1, zijde2)</p>
+			</li>
+			<li>
+				<p>berekenOppervlakteVierkant(zijde)</p>
+			</li>
+			<li>
+				<p>berekenOppervlakteDriehoek(basis, hoogte)</p>
+			</li>
+		</ul>
+		<p>
+			De functie berekenOppervlakteVierkant maakt intern gebruik van de functie berekenOppervlakteRechthoek.
+			Maak voorbeeldberekeningen gebruik makend van elk van de geschreven functies en druk de uitkomsten af, we gebruiken hiervoor echo.
+		</p>
+
+		<section class="results-container">
+			<p>
+				De oppervlakte van een rechthoek met een zijde van lengte <span id="rectangleSide1" data-value="29"></span>cm en een zijde van lengte <span id="rectangleSide2" data-value="45"></span>cm is: <span id="result-e2-a"></span>
+			</p>
+
+			<p>
+				De oppervlakte van een vierkant met een zijde van lengte <span id="squareSide" data-value="7.5"></span>cm is: <span id="result-e2-b"></span>
+			</p>
+
+			<p>
+				De oppervlakte van een driehoek met een basis van lengte <span id="triangleBase" data-value="7"></span>cm en een hoogte van lengte <span id="triangleHeight" data-value="15"></span>cm is: <span id="result-e2-c"></span>
+			</p>
 		</section>
 		<hr>
 	</section>

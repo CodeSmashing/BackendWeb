@@ -1,13 +1,26 @@
 const minimizeButtonList = document.querySelectorAll(".minimize");
-const radius = document.querySelector("#radius");
-const resultE1 = document.querySelector("#result-e1");
 const assignment = document.querySelector("#assignment").value;
+const radius = document.querySelector("#radius");
+const rectangleSide1 = document.querySelector("#rectangleSide1");
+const rectangleSide2 = document.querySelector("#rectangleSide2");
+const squareSide = document.querySelector("#squareSide");
+const triangleBase = document.querySelector("#triangleBase");
+const triangleHeight = document.querySelector("#triangleHeight");
+const resultE1 = document.querySelector("#result-e1");
+const resultE2A = document.querySelector("#result-e2-a");
+const resultE2B = document.querySelector("#result-e2-b");
+const resultE2C = document.querySelector("#result-e2-c");
 
 minimizeButtonList.forEach((button) => {
 	button.addEventListener("click", minimizeSection);
 });
 
 radius.textContent = radius.dataset.value;
+rectangleSide1.textContent = rectangleSide1.dataset.value;
+rectangleSide2.textContent = rectangleSide2.dataset.value;
+squareSide.textContent = squareSide.dataset.value;
+triangleBase.textContent = triangleBase.dataset.value;
+triangleHeight.textContent = triangleHeight.dataset.value;
 
 function minimizeSection(event) {
 	const button = event.target;
@@ -48,12 +61,24 @@ async function updateResults() {
 
 	switch (assignment) {
 		case "e1":
-			const radiusValue = parseFloat(radius.dataset.value);
-			if (isNaN(radiusValue)) return console.warn("No valid radius was given.");
+			info.radius = parseFloat(Number(radius.dataset.value));
+			if (isNaN(info.radius)) return console.warn("There was a non-valid radius given.");
 
-			info.radius = radiusValue;
 			data = await processAssignment(assignment, info);
-			resultE1.textContent = data && data.surfaceArea ? data.surfaceArea : "N/A";
+			resultE1.textContent = data && data.surfaceAreaCirkel ? data.surfaceAreaCirkel : "N/A";
+			break;
+		case "e2":
+			info.rectangleSide1 = parseFloat(Number(rectangleSide1.dataset.value));
+			info.rectangleSide2 = parseFloat(Number(rectangleSide2.dataset.value));
+			info.squareSide = parseFloat(Number(squareSide.dataset.value));
+			info.triangleBase = parseFloat(Number(triangleBase.dataset.value));
+			info.triangleHeight = parseFloat(Number(triangleHeight.dataset.value));
+			if (Object.values(info).some((value) => isNaN(value))) return console.warn("There was a non-valid side given.");
+
+			data = await processAssignment(assignment, info);
+			resultE2A.textContent = data && data.surfaceAreaRectangle ? `${data.surfaceAreaRectangle}cm²` : "N/A";
+			resultE2B.textContent = data && data.surfaceAreaSquare ? `${data.surfaceAreaSquare}cm²` : "N/A";
+			resultE2C.textContent = data && data.surfaceAreaTriangle ? `${data.surfaceAreaTriangle}cm²` : "N/A";
 			break;
 		default:
 			break;
