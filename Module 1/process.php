@@ -4,6 +4,7 @@ include "Easy/e1_constanteEnFunctie.php";
 include "Easy/e2_meetkunde.php";
 include "Easy/e3_globaleVariabele.php";
 include "Easy/e4_variabelen.php";
+include "Easy/e5_controlestructurenEnLussen.php";
 
 set_exception_handler(function (Throwable $e) {
 	error_log("Uncaught exception: " . $e->getMessage(), 0);
@@ -55,6 +56,9 @@ switch ($assignment) {
 		break;
 	case "e4":
 		$json_response["variabelTest"] = variabelTest();
+		break;
+	case "e5":
+		$json_response["randomNumberResults"] = checkRandomNumber();
 		break;
 	default:
 		break;

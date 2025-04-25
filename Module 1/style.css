@@ -19,6 +19,15 @@ a {
 	color: aquamarine;
 }
 
+.code-container {
+    display: block;
+    unicode-bidi: embed;
+    font-family: monospace;
+    white-space: pre;
+	color: aquamarine;
+	background-color: #000;
+}
+
 hr {
 	border: 0;
 	height: 1px;
@@ -59,4 +68,9 @@ section {
 	border-radius: 5px;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 	background-color: #424242;
+}
+
+#result-e5 {
+	max-height: 200px;
+	overflow-y: scroll;
 }
