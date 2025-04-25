@@ -13,6 +13,7 @@ const resultE2C = document.querySelector("#result-e2-c");
 const resultE3 = document.querySelector("#result-e3");
 const resultE4 = document.querySelector("#result-e4");
 const resultE5 = document.querySelector("#result-e5");
+const resultE6 = document.querySelector("#result-e6");
 
 minimizeButtonList.forEach((button) => {
 	button.addEventListener("click", minimizeSection);
@@ -61,6 +62,7 @@ async function processAssignment(assignment = undefined, info = {}) {
 async function updateResults() {
 	let info = {};
 	let data = {};
+	let htmlString = "";
 
 	switch (assignment) {
 		case "e1":
@@ -109,11 +111,17 @@ async function updateResults() {
 			data = await processAssignment(assignment, info);
 			if (!data || !data.randomNumberResults) return console.warn("No data returned from the server.");
 
-			let htmlString = "";
+			htmlString = "";
 			for (const result of data.randomNumberResults) {
 				htmlString += `<li><p>${result}</p></li>`;
 			}
 			resultE5.innerHTML = htmlString;
+			break;
+		case "e6":
+			data = await processAssignment(assignment, info);
+			if (!data || !data.sumResults) return console.warn("No data returned from the server.");
+
+			resultE6.textContent = data.sumResults;
 			break;
 		default:
 			break;
