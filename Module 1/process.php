@@ -2,6 +2,7 @@
 header("Content-Type: application/json");
 include "Easy/e1_constanteEnFunctie.php";
 include "Easy/e2_meetkunde.php";
+include "Easy/e3_globaleVariabele.php";
 
 set_exception_handler(function (Throwable $e) {
 	error_log("Uncaught exception: " . $e->getMessage(), 0);
@@ -31,9 +32,25 @@ switch ($assignment) {
 		$triangleBase = (int) $info->triangleBase;
 		$triangleHeight = (int) $info->triangleHeight;
 
+		global $functionsExecutedCounter;
 		$json_response["surfaceAreaRectangle"] = calculateSurfaceAreaRectangle($rectangleSide1, $rectangleSide2);
 		$json_response["surfaceAreaSquare"] = calculateSurfaceAreaSquare($squareSide);
 		$json_response["surfaceAreaTriangle"] = calculateSurfaceAreaTriangle($triangleBase, $triangleHeight);
+		$json_response["functionsExecutedCounter"] = $functionsExecutedCounter;
+		break;
+	case "e3":
+		$rectangleSide1 = (int) $info->rectangleSide1;
+		$rectangleSide2 = (int) $info->rectangleSide2;
+		$squareSide = (int) $info->squareSide;
+		$triangleBase = (int) $info->triangleBase;
+		$triangleHeight = (int) $info->triangleHeight;
+
+		global $functionsExecutedCounter;
+		calculateSurfaceAreaRectangle($rectangleSide1, $rectangleSide2);
+		calculateSurfaceAreaSquare($squareSide);
+		calculateSurfaceAreaTriangle($triangleBase, $triangleHeight);
+
+		$json_response["functionsExecutedCounter"] = $functionsExecutedCounter;
 		break;
 	default:
 		break;

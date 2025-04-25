@@ -10,6 +10,7 @@ const resultE1 = document.querySelector("#result-e1");
 const resultE2A = document.querySelector("#result-e2-a");
 const resultE2B = document.querySelector("#result-e2-b");
 const resultE2C = document.querySelector("#result-e2-c");
+const resultE3 = document.querySelector("#result-e3");
 
 minimizeButtonList.forEach((button) => {
 	button.addEventListener("click", minimizeSection);
@@ -79,6 +80,17 @@ async function updateResults() {
 			resultE2A.textContent = data && data.surfaceAreaRectangle ? `${data.surfaceAreaRectangle}cm²` : "N/A";
 			resultE2B.textContent = data && data.surfaceAreaSquare ? `${data.surfaceAreaSquare}cm²` : "N/A";
 			resultE2C.textContent = data && data.surfaceAreaTriangle ? `${data.surfaceAreaTriangle}cm²` : "N/A";
+			break;
+		case "e3":
+			info.rectangleSide1 = parseFloat(Number(rectangleSide1.dataset.value));
+			info.rectangleSide2 = parseFloat(Number(rectangleSide2.dataset.value));
+			info.squareSide = parseFloat(Number(squareSide.dataset.value));
+			info.triangleBase = parseFloat(Number(triangleBase.dataset.value));
+			info.triangleHeight = parseFloat(Number(triangleHeight.dataset.value));
+			if (Object.values(info).some((value) => isNaN(value))) return console.warn("There was a non-valid side given.");
+
+			data = await processAssignment(assignment, info);
+			resultE3.textContent = data && !isNaN(data.functionsExecutedCounter) ? data.functionsExecutedCounter : "N/A";
 			break;
 		default:
 			break;

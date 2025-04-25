@@ -1,0 +1,2 @@
+<?php
+$functionsExecutedCounter = 0;
