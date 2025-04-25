@@ -10,7 +10,7 @@
 </head>
 
 <body>
-	<input type="hidden" id="assignment" value="e3" disabled>
+	<input type="hidden" id="assignment" value="e4" disabled>
 
 	<section class="minimized">
 		<button class="minimize"></button>
@@ -70,7 +70,7 @@
 		<hr>
 	</section>
 
-	<section>
+	<section class="minimized">
 		<button class="minimize"></button>
 		<h2><strong>E3:</strong> Globale variabele</h2>
 		<p>
@@ -90,6 +90,38 @@
 			<p>
 				In het totaal zijn de functies <span id="result-e3" data-value="0"></span> aantal keer aangeroepen.
 			</p>
+		</section>
+		<hr>
+	</section>
+
+	<section>
+		<button class="minimize"></button>
+		<h2><strong>E4:</strong> Variabelen</h2>
+		<p>
+			Maak enkele variabelen aan en ken er een waarde aan toe zodat de je de volgende situaties krijgt: 
+		</p>
+		<ul>
+			<li>
+				<p>isset($variabele1) == true</p>
+			</li>
+			<li>
+				<p>isset($variabele2) == false</p>
+			</li>
+			<li>
+				<p>empty($variabele3) == true</p>
+			</li>
+			<li>
+				<p>empty($variabele4) == false</p>
+			</li>
+			<li>
+				<p>isset($variabele5) == true && empty($variabele5) == false</p>
+			</li>
+		</ul>
+		<p>Meer informatie over isset en empty vind je <a href="https://www.php.net/manual/en/function.isset.php">hier</a> en <a href="https://www.php.net/manual/en/function.empty.php">hier</a>.</p>
+
+		<section class="results-container">
+			<p>Resultaat:</p>
+			<ul id="result-e4"></ul>
 		</section>
 		<hr>
 	</section>

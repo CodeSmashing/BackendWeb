@@ -11,6 +11,7 @@ const resultE2A = document.querySelector("#result-e2-a");
 const resultE2B = document.querySelector("#result-e2-b");
 const resultE2C = document.querySelector("#result-e2-c");
 const resultE3 = document.querySelector("#result-e3");
+const resultE4 = document.querySelector("#result-e4");
 
 minimizeButtonList.forEach((button) => {
 	button.addEventListener("click", minimizeSection);
@@ -91,6 +92,17 @@ async function updateResults() {
 
 			data = await processAssignment(assignment, info);
 			resultE3.textContent = data && !isNaN(data.functionsExecutedCounter) ? data.functionsExecutedCounter : "N/A";
+			break;
+		case "e4":
+			data = await processAssignment(assignment, info);
+			if (!data || !data.variabelTest) return console.warn("No data returned from the server.");
+
+			resultE4.innerHTML = `
+			<li><p>Variabele 1: ${data.variabelTest.variabel1}</p></li>
+			<li><p>Variabele 2: ${data.variabelTest.variabel2}</p></li>
+			<li><p>Variabele 3: ${data.variabelTest.variabel3}</p></li>
+			<li><p>Variabele 4: ${data.variabelTest.variabel4}</p></li>
+			<li><p>Variabele 5: ${data.variabelTest.variabel5[0]}, ${data.variabelTest.variabel5[1]}</p></li>`;
 			break;
 		default:
 			break;

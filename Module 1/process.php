@@ -3,6 +3,7 @@ header("Content-Type: application/json");
 include "Easy/e1_constanteEnFunctie.php";
 include "Easy/e2_meetkunde.php";
 include "Easy/e3_globaleVariabele.php";
+include "Easy/e4_variabelen.php";
 
 set_exception_handler(function (Throwable $e) {
 	error_log("Uncaught exception: " . $e->getMessage(), 0);
@@ -51,6 +52,9 @@ switch ($assignment) {
 		calculateSurfaceAreaTriangle($triangleBase, $triangleHeight);
 
 		$json_response["functionsExecutedCounter"] = $functionsExecutedCounter;
+		break;
+	case "e4":
+		$json_response["variabelTest"] = variabelTest();
 		break;
 	default:
 		break;
