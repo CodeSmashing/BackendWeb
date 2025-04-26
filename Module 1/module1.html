@@ -10,28 +10,33 @@
 </head>
 
 <body>
-	<input type="hidden" id="assignment" value="e6" disabled>
+	<input type="hidden" id="assignment" value="m1" disabled>
 
 	<h1>Module 1 exercises</h1>
 
-	<article class="" name="m1-easy">
+	<article class="minimized" name="m1-easy">
 		<button class="minimize"></button>
 		<h2>Easy</h2>
 
 		<section class="minimized">
 			<button class="minimize"></button>
 			<h3><strong>E1:</strong> Constante en Functie</h3>
+
 			<p>
 				Schrijf een functie met de naam berekenOppervlakteCirkel die de oppervlakte van een cirkel berekent.
 				Deze functie moet één parameters hebben, straal.
 				De formule voor het berekenen van de oppervlakte van een cirkel is: oppervlakte = π * straal * straal.
 			</p>
-			<p>Deze functie moet de oppervlakte van een cirkel berekenen en teruggeven.</p>
+
+			<p>
+				Deze functie moet de oppervlakte van een cirkel berekenen en teruggeven.
+			</p>
+
 			<p>
 				De waarde van π moet een constante zijn.
 				Deze constante moet je zelf definiëren (en je mag veronderstellen dat pi gelijk is aan 3.1415).
 			</p>
-	
+
 			<section class="results-container">
 				<p>
 					De oppervlakte van een cirkel met een straal van <span id="radius" data-value="3"></span> is: <span id="result-e1"></span>
@@ -39,11 +44,15 @@
 			</section>
 			<hr>
 		</section>
-	
+
 		<section class="minimized">
 			<button class="minimize"></button>
 			<h3><strong>E2:</strong> Meetkunde</h3>
-			<p>We bouwen verder op de functie van E1 en gaan de volgende functies toevoegen:</p>
+
+			<p>
+				We bouwen verder op de functie van E1 en gaan de volgende functies toevoegen:
+			</p>
+
 			<ul>
 				<li>
 					<p>berekenOppervlakteRechthoek(zijde1, zijde2)</p>
@@ -55,43 +64,49 @@
 					<p>berekenOppervlakteDriehoek(basis, hoogte)</p>
 				</li>
 			</ul>
+
 			<p>
 				De functie berekenOppervlakteVierkant maakt intern gebruik van de functie berekenOppervlakteRechthoek.
 				Maak voorbeeldberekeningen gebruik makend van elk van de geschreven functies en druk de uitkomsten af, we gebruiken hiervoor echo.
 			</p>
-	
+
 			<section class="results-container">
 				<p>
 					De oppervlakte van een rechthoek met een zijde van lengte <span id="rectangleSide1" data-value="29"></span>cm en een zijde van lengte <span id="rectangleSide2" data-value="45"></span>cm is: <span id="result-e2-a"></span>
 				</p>
-	
+
 				<p>
 					De oppervlakte van een vierkant met een zijde van lengte <span id="squareSide" data-value="7.5"></span>cm is: <span id="result-e2-b"></span>
 				</p>
-	
+
 				<p>
 					De oppervlakte van een driehoek met een basis van lengte <span id="triangleBase" data-value="7"></span>cm en een hoogte van lengte <span id="triangleHeight" data-value="15"></span>cm is: <span id="result-e2-c"></span>
 				</p>
 			</section>
 			<hr>
 		</section>
-	
+
 		<section class="minimized">
 			<button class="minimize"></button>
 			<h3><strong>E3:</strong> Globale variabele</h3>
+
 			<p>
 				We kunnen een globale variabele definiëren in PHP door de variabele buiten een functie te definiëren.
 				Van zodra we binnen een functie deze variabele willen gebruiken, moeten we deze variabele global maken.
 				Dit doen we door global $variabeleNaam; te schrijven.
 				Van zodra we dit doen zal PHP gaan zoeken in de globale scope naar de variabele met de naam $variabeleNaam.
 			</p>
+
 			<p>
 				We gaan in de globale variabele $functionsExecutedCounter bijhouden hoeveel keer we één van de bovenstaande functies hebben aangeroepen.
 				Elke keer wanneer er één van de hierboven gedefinieerde functies wordt aangeroepen, moet deze teller verhoogd worden.
 				Er is slechts één centrale teller voor alle functies.
 			</p>
-			<p>Druk het resultaat van de teller af.</p>
-	
+
+			<p>
+				Druk het resultaat van de teller af.
+			</p>
+
 			<section class="results-container">
 				<p>
 					In het totaal zijn de functies <span id="result-e3" data-value="0"></span> aantal keer aangeroepen.
@@ -99,13 +114,15 @@
 			</section>
 			<hr>
 		</section>
-	
+
 		<section class="minimized">
 			<button class="minimize"></button>
 			<h3><strong>E4:</strong> Variabelen</h3>
+
 			<p>
-				Maak enkele variabelen aan en ken er een waarde aan toe zodat de je de volgende situaties krijgt: 
+				Maak enkele variabelen aan en ken er een waarde aan toe zodat de je de volgende situaties krijgt:
 			</p>
+
 			<ul>
 				<li>
 					<p>isset($variabele1) == true</p>
@@ -123,18 +140,25 @@
 					<p>isset($variabele5) == true && empty($variabele5) == false</p>
 				</li>
 			</ul>
-			<p>Meer informatie over isset en empty vind je <a href="https://www.php.net/manual/en/function.isset.php">hier</a> en <a href="https://www.php.net/manual/en/function.empty.php">hier</a>.</p>
-	
+
+			<p>
+				Meer informatie over isset en empty vind je <a href="https://www.php.net/manual/en/function.isset.php">hier</a> en <a href="https://www.php.net/manual/en/function.empty.php">hier</a>.
+			</p>
+
 			<section class="results-container">
-				<p>Resultaat:</p>
+				<p>
+					Resultaat:
+				</p>
+
 				<ul id="result-e4"></ul>
 			</section>
 			<hr>
 		</section>
-	
+
 		<section class="minimized">
 			<button class="minimize"></button>
 			<h3><strong>E5:</strong> Controlestructuren & Lussen</h3>
+
 			<p>
 				Schrijf een PHP-functie die nagaat of een nummer gelijk is aan 30, 20 of 10.
 				Indien het nummer gelijk is aan één van deze drie getallen, geef je het volgende weer:
@@ -153,12 +177,56 @@
 		<section class="minimized">
 			<button class="minimize"></button>
 			<h3><strong>E6:</strong> Controlestructuren & Lussen</h3>
+
 			<p>
 				Schrijf een PHP-script die de som weergeeft van alle getallen van 1 tot en met 30. Gebruik hiervoor een lus.
 			</p>
-	
+
 			<section class="results-container">
-				<p>Als we alle getallen van 1 tot en met 30 met elkaar optellen krijgen we: <span id="result-e6"></span></p>
+				<p>
+					Als we alle getallen van 1 tot en met 30 met elkaar optellen krijgen we: <span id="result-e6"></span>
+				</p>
+			</section>
+			<hr>
+		</section>
+	</article>
+
+	<article name="m1-medium">
+		<button class="minimize"></button>
+		<h2>Medium</h2>
+
+		<section>
+			<button class="minimize"></button>
+			<h3><strong>M1:</strong> Date-object</h3>
+
+			<p>
+				Schrijf een PHP script dat de huidige datum en tijd weergeeft in de volgende formaten:
+			</p>
+
+			<ul>
+				<li>
+					<p>
+						2024-09-20
+					</p>
+				</li>
+				<li>
+					<p>
+						20/09/24 00:00:00
+					</p>
+				</li>
+				<li>
+					<p>
+						Vrijdag 20/09/2024, 14:30:00
+					</p>
+				</li>
+			</ul>
+
+			<p>
+				Je kan de verschillende mogelijkheden voor het formatteren van een datum en tijd terugvinden op <a href="https://www.php.net/manual/en/datetime.format.php">deze pagina</a>.
+			</p>
+
+			<section class="results-container">
+				<ul id="result-m1"></ul>
 			</section>
 			<hr>
 		</section>

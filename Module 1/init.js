@@ -14,6 +14,7 @@ const resultE3 = document.querySelector("#result-e3");
 const resultE4 = document.querySelector("#result-e4");
 const resultE5 = document.querySelector("#result-e5");
 const resultE6 = document.querySelector("#result-e6");
+const resultM1 = document.querySelector("#result-m1");
 
 minimizeButtonList.forEach((button) => {
 	button.addEventListener("click", toggleMinimization);
@@ -122,6 +123,16 @@ async function updateResults() {
 			if (!data || !data.sumResults) return console.warn("No data returned from the server.");
 
 			resultE6.textContent = data.sumResults;
+			break;
+		case "m1":
+			data = await processAssignment(assignment, info);
+			if (!data || !data.dateTime) return console.warn("No data returned from the server.");
+
+			htmlString = "";
+			for (const result of Object.values(data.dateTime)) {
+				htmlString += `<li><p>${result}</p></li>`;
+			}
+			resultM1.innerHTML = htmlString;
 			break;
 		default:
 			break;

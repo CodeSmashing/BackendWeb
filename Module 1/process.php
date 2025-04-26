@@ -6,6 +6,7 @@ include "Easy/e3_globaleVariabele.php";
 include "Easy/e4_variabelen.php";
 include "Easy/e5_controlestructurenEnLussen.php";
 include "Easy/e6_controlestructurenEnLussen.php";
+include "Medium/m1_dateObject.php";
 
 set_exception_handler(function (Throwable $e) {
 	error_log("Uncaught exception: " . $e->getMessage(), 0);
@@ -63,6 +64,9 @@ switch ($assignment) {
 		break;
 	case "e6":
 		$json_response["sumResults"] = sumNumbers();
+		break;
+	case "m1":
+		$json_response["dateTime"] = getDateTime();
 		break;
 	default:
 		break;
