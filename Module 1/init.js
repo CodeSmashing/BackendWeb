@@ -16,7 +16,7 @@ const resultE5 = document.querySelector("#result-e5");
 const resultE6 = document.querySelector("#result-e6");
 
 minimizeButtonList.forEach((button) => {
-	button.addEventListener("click", minimizeSection);
+	button.addEventListener("click", toggleMinimization);
 });
 
 radius.textContent = radius.dataset.value;
@@ -26,10 +26,10 @@ squareSide.textContent = squareSide.dataset.value;
 triangleBase.textContent = triangleBase.dataset.value;
 triangleHeight.textContent = triangleHeight.dataset.value;
 
-function minimizeSection(event) {
+function toggleMinimization(event) {
 	const button = event.target;
-	const section = button.parentElement;
-	section.classList.toggle("minimized");
+	const parent = button.parentElement;
+	parent.classList.toggle("minimized");
 }
 
 async function processAssignment(assignment = undefined, info = {}) {
