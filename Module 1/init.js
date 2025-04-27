@@ -20,6 +20,8 @@ const resultM2 = document.querySelector("#result-m2");
 const resultM3 = document.querySelector("#result-m3");
 const resultM3FirstInput = document.querySelector("#result-m3-first-name");
 const resultM3LastInput = document.querySelector("#result-m3-last-name");
+const resultM4A = document.querySelector("#result-m4-a");
+const resultM4B = document.querySelector("#result-m4-b");
 
 minimizedElementList.forEach((element) => {
 	element.scrollTop = 0;
@@ -29,9 +31,11 @@ minimizeButtonList.forEach((button) => {
 	button.addEventListener("click", toggleMinimization);
 });
 
-[resultM3FirstInput, resultM3LastInput].forEach((button) => button.addEventListener("keydown", (event) => {
-	if (event.key === "Enter") updateResults();
-}));
+[resultM3FirstInput, resultM3LastInput].forEach((button) =>
+	button.addEventListener("keydown", (event) => {
+		if (event.key === "Enter") updateResults();
+	})
+);
 
 radius.textContent = radius.dataset.value;
 rectangleSide1.textContent = rectangleSide1.dataset.value;
@@ -48,7 +52,7 @@ function toggleMinimization(event) {
 }
 
 async function processAssignment(assignment = undefined, info = {}) {
-	if (!assignment) return console.warn("No assignment identifier provided to processAssignment.");
+	if (!assignment) return console.warn("processAssignment: No assignment identifier provided.");
 	console.info(`Working on assignment ${assignment}...`);
 
 	return fetch("process.php", {
@@ -57,12 +61,15 @@ async function processAssignment(assignment = undefined, info = {}) {
 			"Content-Type": "application/x-www-form-urlencoded",
 		},
 		body: new URLSearchParams({
-			info: JSON.stringify(info),
-			assignment,
-		}),
+			info: encodeURIComponent(JSON.stringify(info)),
+			assignment: encodeURIComponent(assignment),
+		}).toString(),
 	})
-		.then((response) => {
-			if (!response.ok) throw new Error(`Response status: ${response.status}, Response body: ${response.text}`);
+		.then(async (response) => {
+			if (!response.ok) {
+				const responseBody = await response.text();
+				throw new Error(`Response status: ${response.status}, Response body: ${responseBody}`);
+			}
 			return response.json();
 		})
 		.then((response) => {
@@ -80,115 +87,128 @@ async function updateResults() {
 	let htmlString = "";
 
 	if (!assignment || typeof assignment !== "string") return console.warn("Invalid or undefined assignment identifier.");
-	switch (assignment) {
-		case "e1":
-			info.radius = parseFloat(Number(radius.dataset.value));
-			if (isNaN(info.radius)) return console.warn("There was a non-valid radius given.");
+	try {
+		switch (assignment) {
+			case "e1":
+				info.radius = parseFloat(Number(radius.dataset.value));
+				if (isNaN(info.radius)) return console.warn("There was a non-valid radius given.");
 
-			data = await processAssignment(assignment, info);
-			resultE1.textContent = data && data.surfaceAreaCirkel ? data.surfaceAreaCirkel : "N/A";
-			break;
-		case "e2":
-			info.rectangleSide1 = parseFloat(Number(rectangleSide1.dataset.value));
-			info.rectangleSide2 = parseFloat(Number(rectangleSide2.dataset.value));
-			info.squareSide = parseFloat(Number(squareSide.dataset.value));
-			info.triangleBase = parseFloat(Number(triangleBase.dataset.value));
-			info.triangleHeight = parseFloat(Number(triangleHeight.dataset.value));
-			if (Object.values(info).some((value) => isNaN(value))) return console.warn("There was a non-valid side given.");
+				data = await processAssignment(assignment, info);
+				resultE1.textContent = data && data.surfaceAreaCirkel ? data.surfaceAreaCirkel : "N/A";
+				break;
+			case "e2":
+				info.rectangleSide1 = parseFloat(Number(rectangleSide1.dataset.value));
+				info.rectangleSide2 = parseFloat(Number(rectangleSide2.dataset.value));
+				info.squareSide = parseFloat(Number(squareSide.dataset.value));
+				info.triangleBase = parseFloat(Number(triangleBase.dataset.value));
+				info.triangleHeight = parseFloat(Number(triangleHeight.dataset.value));
+				if (Object.values(info).some((value) => isNaN(value))) return console.warn("There was a non-valid side given.");
 
-			data = await processAssignment(assignment, info);
-			resultE2A.textContent = data && data.surfaceAreaRectangle ? `${data.surfaceAreaRectangle}cm²` : "N/A";
-			resultE2B.textContent = data && data.surfaceAreaSquare ? `${data.surfaceAreaSquare}cm²` : "N/A";
-			resultE2C.textContent = data && data.surfaceAreaTriangle ? `${data.surfaceAreaTriangle}cm²` : "N/A";
-			break;
-		case "e3":
-			info.rectangleSide1 = parseFloat(Number(rectangleSide1.dataset.value));
-			info.rectangleSide2 = parseFloat(Number(rectangleSide2.dataset.value));
-			info.squareSide = parseFloat(Number(squareSide.dataset.value));
-			info.triangleBase = parseFloat(Number(triangleBase.dataset.value));
-			info.triangleHeight = parseFloat(Number(triangleHeight.dataset.value));
-			if (Object.values(info).some((value) => isNaN(value))) return console.warn("There was a non-valid side given.");
+				data = await processAssignment(assignment, info);
+				resultE2A.textContent = data && data.surfaceAreaRectangle ? `${data.surfaceAreaRectangle}cm²` : "N/A";
+				resultE2B.textContent = data && data.surfaceAreaSquare ? `${data.surfaceAreaSquare}cm²` : "N/A";
+				resultE2C.textContent = data && data.surfaceAreaTriangle ? `${data.surfaceAreaTriangle}cm²` : "N/A";
+				break;
+			case "e3":
+				info.rectangleSide1 = parseFloat(Number(rectangleSide1.dataset.value));
+				info.rectangleSide2 = parseFloat(Number(rectangleSide2.dataset.value));
+				info.squareSide = parseFloat(Number(squareSide.dataset.value));
+				info.triangleBase = parseFloat(Number(triangleBase.dataset.value));
+				info.triangleHeight = parseFloat(Number(triangleHeight.dataset.value));
+				if (Object.values(info).some((value) => isNaN(value))) return console.warn("There was a non-valid side given.");
 
-			data = await processAssignment(assignment, info);
-			resultE3.textContent = data && !isNaN(data.functionsExecutedCounter) ? data.functionsExecutedCounter : "N/A";
-			break;
-		case "e4":
-			data = await processAssignment(assignment, info);
-			if (!data || !data.variabelTest) return console.warn("No data returned from the server.");
+				data = await processAssignment(assignment, info);
+				resultE3.textContent = data && !isNaN(data.functionsExecutedCounter) ? data.functionsExecutedCounter : "N/A";
+				break;
+			case "e4":
+				data = await processAssignment(assignment, info);
+				if (!data || !data.variabelTest) return console.warn("No data returned from the server.");
 
-			resultE4.innerHTML = `
-			<li><p>Variabele 1: ${data.variabelTest.variabel1}</p></li>
-			<li><p>Variabele 2: ${data.variabelTest.variabel2}</p></li>
-			<li><p>Variabele 3: ${data.variabelTest.variabel3}</p></li>
-			<li><p>Variabele 4: ${data.variabelTest.variabel4}</p></li>
-			<li><p>Variabele 5: ${data.variabelTest.variabel5[0]}, ${data.variabelTest.variabel5[1]}</p></li>`;
-			break;
-		case "e5":
-			data = await processAssignment(assignment, info);
-			if (!data || !data.randomNumberResults) return console.warn("No data returned from the server.");
+				resultE4.innerHTML = `
+				<li><p>Variabele 1: ${data.variabelTest.variabel1}</p></li>
+				<li><p>Variabele 2: ${data.variabelTest.variabel2}</p></li>
+				<li><p>Variabele 3: ${data.variabelTest.variabel3}</p></li>
+				<li><p>Variabele 4: ${data.variabelTest.variabel4}</p></li>
+				<li><p>Variabele 5: ${data.variabelTest.variabel5[0]}, ${data.variabelTest.variabel5[1]}</p></li>`;
+				break;
+			case "e5":
+				data = await processAssignment(assignment, info);
+				if (!data || !data.randomNumberResults) return console.warn("No data returned from the server.");
 
-			htmlString = "";
-			for (const result of data.randomNumberResults) {
-				htmlString += `<li><p>${result}</p></li>`;
-			}
-			resultE5.innerHTML = htmlString;
-			break;
-		case "e6":
-			data = await processAssignment(assignment, info);
-			if (!data || !data.sumResults) return console.warn("No data returned from the server.");
+				htmlString = data.randomNumberResults
+					.map((result) => `<li><p>${result}</p></li>`)
+					.join("");
+				resultE5.innerHTML = htmlString;
+				break;
+			case "e6":
+				data = await processAssignment(assignment, info);
+				if (!data || !data.sumResults) return console.warn("No data returned from the server.");
 
-			resultE6.textContent = data.sumResults;
-			break;
-		case "m1":
-			data = await processAssignment(assignment, info);
-			if (!data || !data.dateTime) return console.warn("No data returned from the server.");
+				resultE6.textContent = data.sumResults;
+				break;
+			case "m1":
+				data = await processAssignment(assignment, info);
+				if (!data || !data.dateTime) return console.warn("No data returned from the server.");
 
-			htmlString = "";
-			for (const result of Object.values(data.dateTime)) {
-				htmlString += `<li><p>${result}</p></li>`;
-			}
-			resultM1.innerHTML = htmlString;
-			break;
-		case "m2":
-			data = await processAssignment(assignment, info);
-			if (!data || !data.currentSeason) return console.warn("No data returned from the server.");
+				htmlString = Object.values(data.dateTime)
+					.map((result) => `<li><p>${result}</p></li>`)
+					.join("");
+				resultM1.innerHTML = htmlString;
+				break;
+			case "m2":
+				data = await processAssignment(assignment, info);
+				if (!data || !data.currentSeason) return console.warn("No data returned from the server.");
 
-			resultM2.textContent = data.currentSeason;
-			break;
-		case "m3":
-			// Sanitize the input to prevent unexpected behavior
-			const firstInput = resultM3FirstInput ? resultM3FirstInput.value.replace(/[^a-zA-Z0-9 ]/g, "").trim() : "";
-			const lastInput = resultM3LastInput ? resultM3LastInput.value.replace(/[^a-zA-Z0-9 ]/g, "").trim() : "";
+				resultM2.textContent = data.currentSeason;
+				break;
+			case "m3":
+				// Sanitize the input to prevent unexpected behavior
+				const firstInput = resultM3FirstInput ? resultM3FirstInput.value.replace(/[^a-zA-Z0-9 ]/g, "").trim() : "";
+				const lastInput = resultM3LastInput ? resultM3LastInput.value.replace(/[^a-zA-Z0-9 ]/g, "").trim() : "";
 
-			if (firstInput && lastInput) {
-				if ([firstInput, lastInput].some((input) => input.includes(" "))) return console.warn("If both inputs are given, neither should contain spaces.");
+				if (firstInput && lastInput) {
+					if ([firstInput, lastInput].some((input) => input.includes(" "))) return console.warn("If both inputs are given, neither should contain spaces.");
 
-				info.inputValue = [firstInput, lastInput];
-			} else if (firstInput && !lastInput) {
-				if (!firstInput.includes(" ")) return console.warn("If only one input is given, it should contain a space.");
+					info.inputValue = [firstInput, lastInput];
+				} else if (firstInput && !lastInput) {
+					if (!firstInput.includes(" ")) return console.warn("If only one input is given, it should contain a space.");
 
-				info.inputValue = firstInput;
-			} else if (!firstInput && lastInput) {
-				if (!lastInput.includes(" ")) return console.warn("If only one input is given, it should contain a space.");
+					info.inputValue = firstInput;
+				} else if (!firstInput && lastInput) {
+					if (!lastInput.includes(" ")) return console.warn("If only one input is given, it should contain a space.");
 
-				info.inputValue = lastInput;
-			} else {
-				return console.warn("Neither input fields are filled.");
-			}
+					info.inputValue = lastInput;
+				} else {
+					return console.warn("Neither input fields are filled.");
+				}
 
-			if (!info.inputValue) return console.warn("There was a non-valid input value given.");
+				if (!info.inputValue) return console.warn("There was a non-valid input value given.");
 
-			data = await processAssignment(assignment, info);
-			if (!data || !data.returnValue) return console.warn("No data returned from the server.");
+				data = await processAssignment(assignment, info);
+				if (!data || !data.returnValue) return console.warn("No data returned from the server.");
 
-			if (Array.isArray(data.returnValue)) {
-				resultM3.textContent = `${data.returnValue[0]} ${data.returnValue[1]}`;
-			} else {
-				resultM3.textContent = data.returnValue;
-			}
-			break;
-		default:
-			break;
+				if (Array.isArray(data.returnValue)) {
+					resultM3.textContent = `${data.returnValue[0]} ${data.returnValue[1]}`;
+				} else {
+					resultM3.textContent = data.returnValue;
+				}
+				break;
+			case "m4":
+				data = await processAssignment(assignment, info);
+				if (!data || !data.statesList) return console.warn("No data returned from the server.");
+
+				resultM4A.textContent = `${data.statesList.length} states`;
+				htmlString = data.statesList
+					.map((state) => `<li><p>${state}</p></li>`)
+					.join("");
+				resultM4B.innerHTML = htmlString;
+				break;
+			default:
+				console.warn(`We haven't implemented the assignment ${assignment} yet.`);
+				break;
+		}
+	} catch (error) {
+		return console.error("Error processing assignment:", error);
 	}
 }
 

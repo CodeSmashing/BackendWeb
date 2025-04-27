@@ -9,6 +9,7 @@ include "Easy/e6_controlestructurenEnLussen.php";
 include "Medium/m1_dateObject.php";
 include "Medium/m2_dateObjectEnControlestructuren.php";
 include "Medium/m3_strings.php";
+include "Medium/m4_array.php";
 
 set_exception_handler(function (Throwable $e) {
 	error_log("Uncaught exception: " . $e->getMessage(), 0);
@@ -76,6 +77,9 @@ switch ($assignment) {
 		$inputValue = $info->inputValue;
 		if (is_string($inputValue)) $json_response["returnValue"] = splitName($inputValue);
 		if (is_array($inputValue)) $json_response["returnValue"] = combineNames($inputValue[0], $inputValue[1]);
+		break;
+	case "m4":
+		$json_response["statesList"] = getStatesList();
 		break;
 	default:
 		break;
