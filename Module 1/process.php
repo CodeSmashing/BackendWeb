@@ -11,6 +11,7 @@ include "Medium/m2_dateObjectEnControlestructuren.php";
 include "Medium/m3_strings.php";
 include "Medium/m4_array.php";
 include "Medium/m5_controlestructurenEnLussen.php";
+include "Medium/m6_stringsEnFuncties.php";
 
 set_exception_handler(function (Throwable $e) {
 	error_log("Uncaught exception: " . $e->getMessage(), 0);
@@ -84,6 +85,16 @@ switch ($assignment) {
 		break;
 	case "m5":
 		$json_response["multiplesList"] = calculateMultiples();
+		break;
+	case "m6":
+		$magicSentence = $info->magicSentence;
+		$shuffleWord = $info->shuffleWord;
+		$palindromeWord = $info->palindromeWord;
+		$anagramWord = $info->anagramWord;
+		$json_response["results"]["caseMagic"] = caseMagic($magicSentence);
+		$json_response["results"]["shuffleWord"] = shuffleWord($shuffleWord);
+		$json_response["results"]["isPalindrome"] = isPalindrome($palindromeWord[0]);
+		$json_response["results"]["isAnagram"] = isAnagram($anagramWord[0], $anagramWord[1]);
 		break;
 	default:
 		break;

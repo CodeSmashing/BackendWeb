@@ -23,6 +23,7 @@ const resultM3LastInput = document.querySelector("#result-m3-last-name");
 const resultM4A = document.querySelector("#result-m4-a");
 const resultM4B = document.querySelector("#result-m4-b");
 const resultM5 = document.querySelector("#result-m5");
+const resultM6 = document.querySelector("#result-m6");
 
 minimizedElementList.forEach((element) => {
 	element.scrollTop = 0;
@@ -62,9 +63,9 @@ async function processAssignment(assignment = undefined, info = {}) {
 			"Content-Type": "application/x-www-form-urlencoded",
 		},
 		body: new URLSearchParams({
-			info: encodeURIComponent(JSON.stringify(info)),
+			info: JSON.stringify(info),
 			assignment: encodeURIComponent(assignment),
-		}).toString(),
+		}),
 	})
 		.then(async (response) => {
 			if (!response.ok) {
@@ -228,6 +229,25 @@ async function updateResults() {
 					htmlString = "<p>No valid data available.</p>";
 				}
 				resultM5.innerHTML = htmlString;
+				break;
+			case "m6":
+				info.magicSentence = "Geef van de meegegeven zin de volgende versies terug";
+				info.shuffleWord = "willekeurige";
+				info.palindromeWord = "lepel";
+				info.anagramWord = ["Torchwood", "Doctor Who"];
+
+				data = await processAssignment(assignment, info);
+				if (!data || !data.results) return console.warn("No data returned from the server.");
+
+				htmlString = `<li><p>caseMagic (${info.magicSentence}):</p><ul>${
+					Object.values(data.results.caseMagic)
+					.map((result) => `<li><p>${result}</p></li>`)
+					.join("")
+				}</ul></li>`;
+				htmlString += `<li><p>shuffleWord (${info.shuffleWord}): ${data.results.shuffleWord}</p></li>`;
+				htmlString += `<li><p>isPalindrome (${info.palindromeWord}): ${data.results.isPalindrome}</p></li>`;
+				htmlString += `<li><p>isAnagram (${info.anagramWord.join(", ")}): ${data.results.isAnagram}</p></li>`;
+				resultM6.innerHTML = htmlString;
 				break;
 			default:
 				console.warn(`We haven't implemented the assignment ${assignment} yet.`);
