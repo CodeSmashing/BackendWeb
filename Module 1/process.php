@@ -12,6 +12,7 @@ include "Medium/m3_strings.php";
 include "Medium/m4_array.php";
 include "Medium/m5_controlestructurenEnLussen.php";
 include "Medium/m6_stringsEnFuncties.php";
+include "Hard/h1_arrays.php";
 
 set_exception_handler(function (Throwable $e) {
 	error_log("Uncaught exception: " . $e->getMessage(), 0);
@@ -95,6 +96,10 @@ switch ($assignment) {
 		$json_response["results"]["shuffleWord"] = shuffleWord($shuffleWord);
 		$json_response["results"]["isPalindrome"] = isPalindrome($palindromeWord[0]);
 		$json_response["results"]["isAnagram"] = isAnagram($anagramWord[0], $anagramWord[1]);
+		break;
+	case "h1":
+		$statesList = getStatesList();
+		$json_response["statesList"] = shuffleArray($statesList);
 		break;
 	default:
 		break;

@@ -24,6 +24,8 @@ const resultM4A = document.querySelector("#result-m4-a");
 const resultM4B = document.querySelector("#result-m4-b");
 const resultM5 = document.querySelector("#result-m5");
 const resultM6 = document.querySelector("#result-m6");
+const resultH1A = document.querySelector("#result-h1-a");
+const resultH1B = document.querySelector("#result-h1-b");
 
 minimizedElementList.forEach((element) => {
 	element.scrollTop = 0;
@@ -199,7 +201,7 @@ async function updateResults() {
 				data = await processAssignment(assignment, info);
 				if (!data || !data.statesList) return console.warn("No data returned from the server.");
 
-				resultM4A.textContent = `${data.statesList.length} states`;
+				resultM4A.textContent = `${data.statesList.length} lidstaten`;
 				htmlString = data.statesList
 					.map((state) => `<li><p>${state}</p></li>`)
 					.join("");
@@ -248,6 +250,16 @@ async function updateResults() {
 				htmlString += `<li><p>isPalindrome (${info.palindromeWord}): ${data.results.isPalindrome}</p></li>`;
 				htmlString += `<li><p>isAnagram (${info.anagramWord.join(", ")}): ${data.results.isAnagram}</p></li>`;
 				resultM6.innerHTML = htmlString;
+				break;
+			case "h1":
+				data = await processAssignment(assignment, info);
+				if (!data || !data.statesList) return console.warn("No data returned from the server.");
+
+				resultH1A.textContent = `${data.statesList.length} lidstaten`;
+				htmlString = data.statesList
+					.map((state) => `<li><p>${state}</p></li>`)
+					.join("");
+				resultH1B.innerHTML = htmlString;
 				break;
 			default:
 				console.warn(`We haven't implemented the assignment ${assignment} yet.`);
