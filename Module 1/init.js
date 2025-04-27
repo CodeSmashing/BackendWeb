@@ -17,6 +17,9 @@ const resultE5 = document.querySelector("#result-e5");
 const resultE6 = document.querySelector("#result-e6");
 const resultM1 = document.querySelector("#result-m1");
 const resultM2 = document.querySelector("#result-m2");
+const resultM3 = document.querySelector("#result-m3");
+const resultM3FirstInput = document.querySelector("#result-m3-first-name");
+const resultM3LastInput = document.querySelector("#result-m3-last-name");
 
 minimizedElementList.forEach((element) => {
 	element.scrollTop = 0;
@@ -25,6 +28,10 @@ minimizedElementList.forEach((element) => {
 minimizeButtonList.forEach((button) => {
 	button.addEventListener("click", toggleMinimization);
 });
+
+[resultM3FirstInput, resultM3LastInput].forEach((button) => button.addEventListener("keydown", (event) => {
+	if (event.key === "Enter") updateResults();
+}));
 
 radius.textContent = radius.dataset.value;
 rectangleSide1.textContent = rectangleSide1.dataset.value;
@@ -72,6 +79,7 @@ async function updateResults() {
 	let data = {};
 	let htmlString = "";
 
+	if (!assignment || typeof assignment !== "string") return console.warn("Invalid or undefined assignment identifier.");
 	switch (assignment) {
 		case "e1":
 			info.radius = parseFloat(Number(radius.dataset.value));
@@ -146,6 +154,38 @@ async function updateResults() {
 			if (!data || !data.currentSeason) return console.warn("No data returned from the server.");
 
 			resultM2.textContent = data.currentSeason;
+			break;
+		case "m3":
+			// Sanitize the input to prevent unexpected behavior
+			const firstInput = resultM3FirstInput ? resultM3FirstInput.value.replace(/[^a-zA-Z0-9 ]/g, "").trim() : "";
+			const lastInput = resultM3LastInput ? resultM3LastInput.value.replace(/[^a-zA-Z0-9 ]/g, "").trim() : "";
+
+			if (firstInput && lastInput) {
+				if ([firstInput, lastInput].some((input) => input.includes(" "))) return console.warn("If both inputs are given, neither should contain spaces.");
+
+				info.inputValue = [firstInput, lastInput];
+			} else if (firstInput && !lastInput) {
+				if (!firstInput.includes(" ")) return console.warn("If only one input is given, it should contain a space.");
+
+				info.inputValue = firstInput;
+			} else if (!firstInput && lastInput) {
+				if (!lastInput.includes(" ")) return console.warn("If only one input is given, it should contain a space.");
+
+				info.inputValue = lastInput;
+			} else {
+				return console.warn("Neither input fields are filled.");
+			}
+
+			if (!info.inputValue) return console.warn("There was a non-valid input value given.");
+
+			data = await processAssignment(assignment, info);
+			if (!data || !data.returnValue) return console.warn("No data returned from the server.");
+
+			if (Array.isArray(data.returnValue)) {
+				resultM3.textContent = `${data.returnValue[0]} ${data.returnValue[1]}`;
+			} else {
+				resultM3.textContent = data.returnValue;
+			}
 			break;
 		default:
 			break;

@@ -10,7 +10,7 @@
 </head>
 
 <body>
-	<input type="hidden" id="assignment" value="m2" disabled>
+	<input type="hidden" id="assignment" value="m3" disabled>
 
 	<h1>Module 1 exercises</h1>
 
@@ -163,11 +163,11 @@
 				Schrijf een PHP-functie die nagaat of een nummer gelijk is aan 30, 20 of 10.
 				Indien het nummer gelijk is aan één van deze drie getallen, geef je het volgende weer:
 			</p>
-	
+
 <div class="code-container">
 	Het nummer is gelijk aan ..<br>
 </div>
-	
+
 			<section class="results-container">
 				<ul id="result-e5"></ul>
 			</section>
@@ -231,7 +231,7 @@
 			<hr>
 		</section>
 
-		<section>
+		<section class="minimized">
 			<button class="minimize"></button>
 			<h3><strong>M2:</strong> Date-object en controlestructuren</h3>
 
@@ -266,6 +266,61 @@
 			<section class="results-container">
 				<p>
 					Het huidige seizoen is: <span id="result-m2"></span>
+				</p>
+			</section>
+			<hr>
+		</section>
+
+		<section>
+			<button class="minimize"></button>
+			<h3><strong>M3:</strong> Strings</h3>
+
+			<p>
+				Maak een PHP applicatie die 2 functies bevat met volgende signaturen: 
+			</p>
+
+			<ul>
+				<li>
+					<p>
+						splitsNaam(naam)
+					</p>
+				</li>
+				<li>
+					<p>
+						voegNamenSamen(voornaam, achternaam)
+					</p>
+				</li>
+			</ul>
+
+			<p>
+				De functie splitsNaam zal op zoek gaan naar de eerste spatie in de meegegeven string, en op die plaats de meegegeven string splitsen.
+				Daarna wordt in de functie een vaste output gegenereerd van de volgende vorm:
+			</p>
+
+<div class="code-container">
+<ul><li><p>Voornaam: Kevin</p></li><li><p>Achternaam: Felix</p></li></ul>
+</div>
+
+			<p>
+				Wanneer de meegegeven string geen spatie bevat, stopt het programma met een foutboodschap (die).
+			</p>
+
+			<p>
+				De functie voegNamenSamen, plakt de achternaam achter de voornaam met de tussenvoeging van een spatie.
+			</p>
+
+			<p>
+				Test deze functies uit. (We veronderstellen dat er nooit een spatie in de voornaam voorkomt).
+			</p>
+
+			<section class="results-container">
+				<div class="input-container">
+					<input type="text" id="result-m3-first-name" value="Kevin Felix" placeholder="Voornaam Achternaam">
+					<input type="text" id="result-m3-last-name" value=""placeholder="Voornaam Achternaam">
+				</div>
+
+				<p>
+					Het resultaat is: <span id="result-m3"></span>
 				</p>
 			</section>
 			<hr>

@@ -14,6 +14,7 @@
 	--background-code: #000000;
 	--background-results: var(--color-secondary);
 	--background-horizontal: color-mix(in srgb, var(--color-text), var(--color-shadow) 60%);
+	--background-input: var(--color-primary);
 
 	/* Color palette text */
 	--default-text: var(--color-text);
@@ -91,6 +92,17 @@ hr {
 	margin: 40px 0;
 }
 
+input {
+	border: none;;
+	font-size: large;
+	font-family: Arial, sans-serif;
+	background-color: var(--background-input);
+	color: var(--default-text);
+	margin-block: 20px;
+	padding: 10px;
+	width: 100%;
+}
+
 section,
 article {
 	position: relative;
@@ -157,4 +169,11 @@ section {
 #result-e5 {
 	max-height: 200px;
 	overflow-y: scroll;
+}
+
+.input-container {
+	display: flex;
+	flex-direction: row;
+	gap: 20px;
+	width: 100%;
 }
