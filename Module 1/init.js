@@ -22,6 +22,7 @@ const resultM3FirstInput = document.querySelector("#result-m3-first-name");
 const resultM3LastInput = document.querySelector("#result-m3-last-name");
 const resultM4A = document.querySelector("#result-m4-a");
 const resultM4B = document.querySelector("#result-m4-b");
+const resultM5 = document.querySelector("#result-m5");
 
 minimizedElementList.forEach((element) => {
 	element.scrollTop = 0;
@@ -202,6 +203,31 @@ async function updateResults() {
 					.map((state) => `<li><p>${state}</p></li>`)
 					.join("");
 				resultM4B.innerHTML = htmlString;
+				break;
+			case "m5":
+				data = await processAssignment(assignment, info);
+				if (!data || !data.multiplesList) return console.warn("No data returned from the server.");
+
+				if (Array.isArray(data.multiplesList) && data.multiplesList.every(Array.isArray)) {
+					htmlString = `<colgroup>${
+						data.multiplesList
+						.map(() => "<col>")
+						.join("")
+					}</colgroup>`;
+					htmlString += `<tbody>${
+						data.multiplesList
+						.map((multipleRow) => `<tr>${
+						multipleRow
+							.map((multiple) => `<td>${multiple}</td>`)
+							.join("")
+							}</tr>`)
+						.join("")
+					}</tbody>`;
+				} else {
+					console.warn("Invalid or undefined multiplesList.");
+					htmlString = "<p>No valid data available.</p>";
+				}
+				resultM5.innerHTML = htmlString;
 				break;
 			default:
 				console.warn(`We haven't implemented the assignment ${assignment} yet.`);

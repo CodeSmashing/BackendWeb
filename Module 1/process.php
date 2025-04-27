@@ -10,6 +10,7 @@ include "Medium/m1_dateObject.php";
 include "Medium/m2_dateObjectEnControlestructuren.php";
 include "Medium/m3_strings.php";
 include "Medium/m4_array.php";
+include "Medium/m5_controlestructurenEnLussen.php";
 
 set_exception_handler(function (Throwable $e) {
 	error_log("Uncaught exception: " . $e->getMessage(), 0);
@@ -80,6 +81,9 @@ switch ($assignment) {
 		break;
 	case "m4":
 		$json_response["statesList"] = getStatesList();
+		break;
+	case "m5":
+		$json_response["multiplesList"] = calculateMultiples();
 		break;
 	default:
 		break;
