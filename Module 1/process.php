@@ -14,6 +14,7 @@ include "Medium/m5_controlestructurenEnLussen.php";
 include "Medium/m6_stringsEnFuncties.php";
 include "Hard/h1_arrays.php";
 include "Hard/h2_arrays.php";
+include "Hard/h3_arrays.php";
 
 set_exception_handler(function (Throwable $e) {
 	error_log("Uncaught exception: " . $e->getMessage(), 0);
@@ -106,6 +107,11 @@ switch ($assignment) {
 		$statesList = getStatesList();
 		$letter = $info->letter;
 		$json_response["statesList"] = removeArrayStringsWithoutSpecificLetter($statesList, $letter);
+		break;
+	case "h3":
+		$statesList = getStatesList();
+		$letter = $info->letter;
+		$json_response["statesList"] = removeArrayStringsWithSpecificLetter($statesList, $letter);
 		break;
 	default:
 		break;

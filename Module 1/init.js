@@ -28,6 +28,8 @@ const resultH1A = document.querySelector("#result-h1-a");
 const resultH1B = document.querySelector("#result-h1-b");
 const resultH2A = document.querySelector("#result-h2-a");
 const resultH2B = document.querySelector("#result-h2-b");
+const resultH3A = document.querySelector("#result-h3-a");
+const resultH3B = document.querySelector("#result-h3-b");
 
 minimizedElementList.forEach((element) => {
 	element.scrollTop = 0;
@@ -274,6 +276,18 @@ async function updateResults() {
 					.map((state) => `<li><p>${state}</p></li>`)
 					.join("");
 				resultH2B.innerHTML = htmlString;
+				break;
+			case "h3":
+				info.letter = "b";
+
+				data = await processAssignment(assignment, info);
+				if (!data || !data.statesList) return console.warn("No data returned from the server.");
+				
+				resultH3A.textContent = `${data.statesList.length} lidstaten`;
+				htmlString = data.statesList
+					.map((state) => `<li><p>${state}</p></li>`)
+					.join("");
+				resultH3B.innerHTML = htmlString;
 				break;
 			default:
 				console.warn(`We haven't implemented the assignment ${assignment} yet.`);
