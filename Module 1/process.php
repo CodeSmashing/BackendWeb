@@ -7,6 +7,7 @@ include "Easy/e4_variabelen.php";
 include "Easy/e5_controlestructurenEnLussen.php";
 include "Easy/e6_controlestructurenEnLussen.php";
 include "Medium/m1_dateObject.php";
+include "Medium/m2_dateObjectEnControlestructuren.php";
 
 set_exception_handler(function (Throwable $e) {
 	error_log("Uncaught exception: " . $e->getMessage(), 0);
@@ -68,6 +69,8 @@ switch ($assignment) {
 	case "m1":
 		$json_response["dateTime"] = getDateTime();
 		break;
+	case "m2":
+		$json_response["currentSeason"] = getCurrentSeason();
 	default:
 		break;
 }

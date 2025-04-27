@@ -15,6 +15,7 @@ const resultE4 = document.querySelector("#result-e4");
 const resultE5 = document.querySelector("#result-e5");
 const resultE6 = document.querySelector("#result-e6");
 const resultM1 = document.querySelector("#result-m1");
+const resultM2 = document.querySelector("#result-m2");
 
 minimizeButtonList.forEach((button) => {
 	button.addEventListener("click", toggleMinimization);
@@ -133,6 +134,12 @@ async function updateResults() {
 				htmlString += `<li><p>${result}</p></li>`;
 			}
 			resultM1.innerHTML = htmlString;
+			break;
+		case "m2":
+			data = await processAssignment(assignment, info);
+			if (!data || !data.currentSeason) return console.warn("No data returned from the server.");
+
+			resultM2.textContent = data.currentSeason;
 			break;
 		default:
 			break;
