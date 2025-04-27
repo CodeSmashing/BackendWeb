@@ -1,3 +1,4 @@
+const minimizedElementList = document.querySelectorAll(".minimized");
 const minimizeButtonList = document.querySelectorAll(".minimize");
 const assignment = document.querySelector("#assignment").value;
 const radius = document.querySelector("#radius");
@@ -17,6 +18,10 @@ const resultE6 = document.querySelector("#result-e6");
 const resultM1 = document.querySelector("#result-m1");
 const resultM2 = document.querySelector("#result-m2");
 
+minimizedElementList.forEach((element) => {
+	element.scrollTop = 0;
+});
+
 minimizeButtonList.forEach((button) => {
 	button.addEventListener("click", toggleMinimization);
 });
@@ -32,6 +37,7 @@ function toggleMinimization(event) {
 	const button = event.target;
 	const parent = button.parentElement;
 	parent.classList.toggle("minimized");
+	parent.scrollTop = 0;
 }
 
 async function processAssignment(assignment = undefined, info = {}) {

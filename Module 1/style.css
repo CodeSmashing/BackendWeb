@@ -102,6 +102,7 @@ article {
 	max-height: 70vh;
 	overflow-y: scroll;
 	box-shadow: 0px 0px 50px -20px rgba(0, 0, 0, 0.5) inset;
+	width: 100%;
 
 	h2 {
 		margin-top: -5px;
@@ -123,6 +124,10 @@ section {
 	overflow: hidden;
 	background-color: var(--background-minimized);
 	box-shadow: 0 5px 5px rgb(34, 34, 34);
+
+	>*:not(.minimize, h3, h2) {
+		display: none;
+	}
 }
 
 .minimize {
