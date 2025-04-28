@@ -30,6 +30,8 @@ const resultH2A = document.querySelector("#result-h2-a");
 const resultH2B = document.querySelector("#result-h2-b");
 const resultH3A = document.querySelector("#result-h3-a");
 const resultH3B = document.querySelector("#result-h3-b");
+const resultC1 = document.querySelector("#result-c1");
+const textToConvert = document.querySelector("#textToConvert");
 
 minimizedElementList.forEach((element) => {
 	element.scrollTop = 0;
@@ -51,6 +53,7 @@ rectangleSide2.textContent = rectangleSide2.dataset.value;
 squareSide.textContent = squareSide.dataset.value;
 triangleBase.textContent = triangleBase.dataset.value;
 triangleHeight.textContent = triangleHeight.dataset.value;
+textToConvert.textContent = '\"' + textToConvert.dataset.value + '\"';
 
 function toggleMinimization(event) {
 	const button = event.target;
@@ -288,6 +291,14 @@ async function updateResults() {
 					.map((state) => `<li><p>${state}</p></li>`)
 					.join("");
 				resultH3B.innerHTML = htmlString;
+				break;
+			case "c1":
+				info.inputString = textToConvert.dataset.value;
+
+				data = await processAssignment(assignment, info);
+				if (!data || !data.textToNumber) return console.warn("No data returned from the server.");
+
+				resultC1.textContent = data.textToNumber;
 				break;
 			default:
 				console.warn(`We haven't implemented the assignment ${assignment} yet.`);

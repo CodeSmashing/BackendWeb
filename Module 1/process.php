@@ -15,6 +15,7 @@ include "Medium/m6_stringsEnFuncties.php";
 include "Hard/h1_arrays.php";
 include "Hard/h2_arrays.php";
 include "Hard/h3_arrays.php";
+include "Challenge@home/c1_convertTextToNumber.php";
 
 set_exception_handler(function (Throwable $e) {
 	error_log("Uncaught exception: " . $e->getMessage(), 0);
@@ -112,6 +113,10 @@ switch ($assignment) {
 		$statesList = getStatesList();
 		$letter = $info->letter;
 		$json_response["statesList"] = removeArrayStringsWithSpecificLetter($statesList, $letter);
+		break;
+	case "c1":
+		$inputString = $info->inputString;
+		$json_response["textToNumber"] = convertTextToNumber($inputString);
 		break;
 	default:
 		break;

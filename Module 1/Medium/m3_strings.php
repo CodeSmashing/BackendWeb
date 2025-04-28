@@ -5,7 +5,7 @@ function splitName($name): array|string {
 	$name = explode(" ", $name, 2);
 	$firstName = $name[0];
 	$lastName = $name[1];
-	return array($firstName, $lastName);
+	return [$firstName, $lastName];
 }
 
 function combineNames($firstName, $lastName): string {
