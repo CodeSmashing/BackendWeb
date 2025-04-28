@@ -34,6 +34,8 @@ const resultC1 = document.querySelector("#result-c1");
 const textToConvert = document.querySelector("#textToConvert");
 const resultC2A = document.querySelector("#result-c2-a");
 const resultC2B = document.querySelector("#result-c2-b");
+const resultC3A = document.querySelector("#result-c3-a");
+const resultC3B = document.querySelector("#result-c3-b");
 
 minimizedElementList.forEach((element) => {
 	element.scrollTop = 0;
@@ -276,7 +278,7 @@ async function updateResults() {
 
 				data = await processAssignment(assignment, info);
 				if (!data || !data.statesList) return console.warn("No data returned from the server.");
-				
+
 				resultH2A.textContent = `${data.statesList.length} lidstaten`;
 				htmlString = data.statesList
 					.map((state) => `<li><p>${state}</p></li>`)
@@ -288,7 +290,7 @@ async function updateResults() {
 
 				data = await processAssignment(assignment, info);
 				if (!data || !data.statesList) return console.warn("No data returned from the server.");
-				
+
 				resultH3A.textContent = `${data.statesList.length} lidstaten`;
 				htmlString = data.statesList
 					.map((state) => `<li><p>${state}</p></li>`)
@@ -310,6 +312,15 @@ async function updateResults() {
 				if (!data || !data.fibonacciSequence) return console.warn("No data returned from the server.");
 
 				resultC2B.textContent = data.fibonacciSequence.join(", ");
+				break;
+			case "c3":
+				info.number = resultC3A.dataset.value;
+
+				data = await processAssignment(assignment, info);
+				if (!data || !data.multipleOfTwo) return console.warn("No data returned from the server.");
+
+				resultC3A.textContent = `${resultC3A.dataset.value} is ${data.multipleOfTwo.isMultiple ? "een" : "geen"}`;
+				resultC3B.textContent = `${data.multipleOfTwo.isMultiple ? `2^${data.multipleOfTwo.power}` : `het dichtste veelvoud is ${2 ** data.multipleOfTwo.power}, 2^${data.multipleOfTwo.power}`}`;
 				break;
 			default:
 				console.warn(`We haven't implemented the assignment ${assignment} yet.`);
