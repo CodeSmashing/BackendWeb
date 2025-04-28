@@ -16,6 +16,7 @@ include "Hard/h1_arrays.php";
 include "Hard/h2_arrays.php";
 include "Hard/h3_arrays.php";
 include "Challenge@home/c1_convertTextToNumber.php";
+include "Challenge@home/c2_fibonacci.php";
 
 set_exception_handler(function (Throwable $e) {
 	error_log("Uncaught exception: " . $e->getMessage(), 0);
@@ -117,6 +118,10 @@ switch ($assignment) {
 	case "c1":
 		$inputString = $info->inputString;
 		$json_response["textToNumber"] = convertTextToNumber($inputString);
+		break;
+	case "c2":
+		$limit = $info->limit;
+		$json_response["fibonacciSequence"] = getFibonacciUpTo($limit);
 		break;
 	default:
 		break;

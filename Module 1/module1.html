@@ -10,7 +10,7 @@
 </head>
 
 <body>
-	<input type="hidden" id="assignment" value="c1" disabled>
+	<input type="hidden" id="assignment" value="c2" disabled>
 
 	<h1>Module 1 exercises</h1>
 
@@ -508,7 +508,7 @@
 		<button class="minimize"></button>
 		<h2>Challenge@home</h2>
 
-		<section>
+		<section class="minimized">
 			<button class="minimize"></button>
 			<h3><strong>@1:</strong> convertTextToNumber</h3>
 
@@ -523,6 +523,27 @@
 			<section class="results-container">
 				<p>
 					De text, <span id="textToConvert" data-value="een;vier;zes;zeven"></span>, geconverteerd naar een getal is: <span id="result-c1"></span>
+				</p>
+			</section>
+			<hr>
+		</section>
+
+		<section>
+			<button class="minimize"></button>
+			<h3><strong>@2:</strong> Fibonacci</h3>
+
+			<p>
+				Schrijf een functie die n termen van de Fibonacci-reeks berekent.
+				De <a href="https://nl.wikipedia.org/wiki/Rij_van_Fibonacci">Fibonacci-reeks</a> is een reeks getallen waarbij elk getal de som is van de twee voorgaande getallen. De reeks begint met 0 en 1.
+			</p>
+
+<div class="code-container">
+<p>fibonacci(10) => 0, 1, 1, 2, 3, 5, 8, 13, 21, 34;</p>
+</div>
+
+			<section class="results-container">
+				<p>
+					De fibonacci reeks tot de <span id="result-c2-a" data-value="10">...</span><sup>de</sup> term: <span id="result-c2-b"></span>
 				</p>
 			</section>
 			<hr>

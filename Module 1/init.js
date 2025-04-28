@@ -32,6 +32,8 @@ const resultH3A = document.querySelector("#result-h3-a");
 const resultH3B = document.querySelector("#result-h3-b");
 const resultC1 = document.querySelector("#result-c1");
 const textToConvert = document.querySelector("#textToConvert");
+const resultC2A = document.querySelector("#result-c2-a");
+const resultC2B = document.querySelector("#result-c2-b");
 
 minimizedElementList.forEach((element) => {
 	element.scrollTop = 0;
@@ -54,6 +56,7 @@ squareSide.textContent = squareSide.dataset.value;
 triangleBase.textContent = triangleBase.dataset.value;
 triangleHeight.textContent = triangleHeight.dataset.value;
 textToConvert.textContent = '\"' + textToConvert.dataset.value + '\"';
+resultC2A.textContent = resultC2A.dataset.value;
 
 function toggleMinimization(event) {
 	const button = event.target;
@@ -299,6 +302,14 @@ async function updateResults() {
 				if (!data || !data.textToNumber) return console.warn("No data returned from the server.");
 
 				resultC1.textContent = data.textToNumber;
+				break;
+			case "c2":
+				info.limit = resultC2A.dataset.value;
+
+				data = await processAssignment(assignment, info);
+				if (!data || !data.fibonacciSequence) return console.warn("No data returned from the server.");
+
+				resultC2B.textContent = data.fibonacciSequence.join(", ");
 				break;
 			default:
 				console.warn(`We haven't implemented the assignment ${assignment} yet.`);
