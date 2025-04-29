@@ -41,27 +41,27 @@ switch ($assignment) {
 		$json_response["surfaceAreaCirkel"] = calculateSurfaceAreaCirkel($radius);
 		break;
 	case "e2":
-		$rectangleSide1 = (int) $info->rectangleSide1;
-		$rectangleSide2 = (int) $info->rectangleSide2;
+		$recSideA = (int) $info->recSideA;
+		$recSideB = (int) $info->recSideB;
 		$squareSide = (int) $info->squareSide;
 		$triangleBase = (int) $info->triangleBase;
 		$triangleHeight = (int) $info->triangleHeight;
 
 		global $functionsExecutedCounter;
-		$json_response["surfaceAreaRectangle"] = calculateSurfaceAreaRectangle($rectangleSide1, $rectangleSide2);
+		$json_response["surfaceAreaRectangle"] = calculateSurfaceAreaRectangle($recSideA, $recSideB);
 		$json_response["surfaceAreaSquare"] = calculateSurfaceAreaSquare($squareSide);
 		$json_response["surfaceAreaTriangle"] = calculateSurfaceAreaTriangle($triangleBase, $triangleHeight);
 		$json_response["functionsExecutedCounter"] = $functionsExecutedCounter;
 		break;
 	case "e3":
-		$rectangleSide1 = (int) $info->rectangleSide1;
-		$rectangleSide2 = (int) $info->rectangleSide2;
+		$recSideA = (int) $info->recSideA;
+		$recSideB = (int) $info->recSideB;
 		$squareSide = (int) $info->squareSide;
 		$triangleBase = (int) $info->triangleBase;
 		$triangleHeight = (int) $info->triangleHeight;
 
 		global $functionsExecutedCounter;
-		calculateSurfaceAreaRectangle($rectangleSide1, $rectangleSide2);
+		calculateSurfaceAreaRectangle($recSideA, $recSideB);
 		calculateSurfaceAreaSquare($squareSide);
 		calculateSurfaceAreaTriangle($triangleBase, $triangleHeight);
 

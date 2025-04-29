@@ -5,20 +5,78 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Module 1</title>
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="../style.css">
 	<link rel="shortcut icon" href="#">
 </head>
 
 <body>
 	<input type="hidden" id="assignment" value="c3" disabled>
+	<aside class="hidden">
+		<ul>
+			<li>
+				<a href="#section-e1"><strong>E1:</strong> Constante en Functie</a>
+			</li>
+			<li>
+				<a href="#section-e2"><strong>E2:</strong> Meetkunde</a>
+			</li>
+			<li>
+				<a href="#section-e3"><strong>E3:</strong> Globale variabele</a>
+			</li>
+			<li>
+				<a href="#section-e4"><strong>E4:</strong> Variabelen</a>
+			</li>
+			<li>
+				<a href="#section-e5"><strong>E5:</strong> Controlestructuren & Lussen</a>
+			</li>
+			<li>
+				<a href="#section-e6"><strong>E6:</strong> Controlestructuren & Lussen</a>
+			</li>
+			<li>
+				<a href="#section-m1"><strong>M1:</strong> Date-object</a>
+			</li>
+			<li>
+				<a href="#section-m2"><strong>M2:</strong> Date-object en controlestructuren</a>
+			</li>
+			<li>
+				<a href="#section-m3"><strong>M3:</strong> Strings</a>
+			</li>
+			<li>
+				<a href="#section-m4"><strong>M4:</strong> Array</a>
+			</li>
+			<li>
+				<a href="#section-m5"><strong>M5:</strong> Controlestructuren & Lussen</a>
+			</li>
+			<li>
+				<a href="#section-m6"><strong>M6:</strong> Strings & Functies</a>
+			</li>
+			<li>
+				<a href="#section-h1"><strong>H1:</strong> Arrays</a>
+			</li>
+			<li>
+				<a href="#section-h2"><strong>H2:</strong> Arrays</a>
+			</li>
+			<li>
+				<a href="#section-h3"><strong>H3:</strong> Arrays</a>
+			</li>
+			<li>
+				<a href="#section-c1"><strong>C1:</strong> convertTextToNumber</a>
+			</li>
+			<li>
+				<a href="#section-c2"><strong>C2:</strong> Fibonacci</a>
+			</li>
+			<li>
+				<a href="#section-c3"><strong>C3:</strong> Veelvouden</a>
+			</li>
+		</ul>
+	</aside>
 
 	<h1>Module 1 exercises</h1>
 
-	<article class="minimized" name="m1-easy">
+	<article class="minimized" id="m1-easy">
 		<button class="minimize"></button>
 		<h2>Easy</h2>
 
-		<section class="minimized">
+		<section class="minimized" id="section-e1">
 			<button class="minimize"></button>
 			<h3><strong>E1:</strong> Constante en Functie</h3>
 
@@ -39,13 +97,13 @@
 
 			<section class="results-container">
 				<p>
-					De oppervlakte van een cirkel met een straal van <span id="radius" data-value="3"></span> is: <span id="result-e1"></span>
+					De oppervlakte van een cirkel met een straal van <span id="input-e1-radius" data-value="3"></span> is: <span id="result-e1"></span>
 				</p>
 			</section>
 			<hr>
 		</section>
 
-		<section class="minimized">
+		<section class="minimized" id="section-e2">
 			<button class="minimize"></button>
 			<h3><strong>E2:</strong> Meetkunde</h3>
 
@@ -72,21 +130,21 @@
 
 			<section class="results-container">
 				<p>
-					De oppervlakte van een rechthoek met een zijde van lengte <span id="rectangleSide1" data-value="29"></span>cm en een zijde van lengte <span id="rectangleSide2" data-value="45"></span>cm is: <span id="result-e2-a"></span>
+					De oppervlakte van een rechthoek met een zijde van lengte <span id="input-e2-recSideA" data-value="29"></span>cm en een zijde van lengte <span id="input-e2-recSideB" data-value="45"></span>cm is: <span id="result-e2-a"></span>
 				</p>
 
 				<p>
-					De oppervlakte van een vierkant met een zijde van lengte <span id="squareSide" data-value="7.5"></span>cm is: <span id="result-e2-b"></span>
+					De oppervlakte van een vierkant met een zijde van lengte <span id="input-e2-squareSide" data-value="7.5"></span>cm is: <span id="result-e2-b"></span>
 				</p>
 
 				<p>
-					De oppervlakte van een driehoek met een basis van lengte <span id="triangleBase" data-value="7"></span>cm en een hoogte van lengte <span id="triangleHeight" data-value="15"></span>cm is: <span id="result-e2-c"></span>
+					De oppervlakte van een driehoek met een basis van lengte <span id="input-e2-triangleBase" data-value="7"></span>cm en een hoogte van lengte <span id="input-e2-triangleHeight" data-value="15"></span>cm is: <span id="result-e2-c"></span>
 				</p>
 			</section>
 			<hr>
 		</section>
 
-		<section class="minimized">
+		<section class="minimized" id="section-e3">
 			<button class="minimize"></button>
 			<h3><strong>E3:</strong> Globale variabele</h3>
 
@@ -115,7 +173,7 @@
 			<hr>
 		</section>
 
-		<section class="minimized">
+		<section class="minimized" id="section-e4">
 			<button class="minimize"></button>
 			<h3><strong>E4:</strong> Variabelen</h3>
 
@@ -155,7 +213,7 @@
 			<hr>
 		</section>
 
-		<section class="minimized">
+		<section class="minimized" id="section-e5">
 			<button class="minimize"></button>
 			<h3><strong>E5:</strong> Controlestructuren & Lussen</h3>
 
@@ -174,7 +232,7 @@
 			<hr>
 		</section>
 
-		<section class="minimized">
+		<section class="minimized" id="section-e6">
 			<button class="minimize"></button>
 			<h3><strong>E6:</strong> Controlestructuren & Lussen</h3>
 
@@ -191,11 +249,11 @@
 		</section>
 	</article>
 
-	<article class="minimized" name="m1-medium">
+	<article class="minimized" id="m1-medium">
 		<button class="minimize"></button>
 		<h2>Medium</h2>
 
-		<section class="minimized">
+		<section class="minimized" id="section-m1">
 			<button class="minimize"></button>
 			<h3><strong>M1:</strong> Date-object</h3>
 
@@ -231,7 +289,7 @@
 			<hr>
 		</section>
 
-		<section class="minimized">
+		<section class="minimized" id="section-m2">
 			<button class="minimize"></button>
 			<h3><strong>M2:</strong> Date-object en controlestructuren</h3>
 
@@ -271,7 +329,7 @@
 			<hr>
 		</section>
 
-		<section class="minimized">
+		<section class="minimized" id="section-m3">
 			<button class="minimize"></button>
 			<h3><strong>M3:</strong> Strings</h3>
 
@@ -315,8 +373,8 @@
 
 			<section class="results-container">
 				<div class="input-container">
-					<input type="text" id="result-m3-first-name" value="Kevin Felix" placeholder="Voornaam Achternaam">
-					<input type="text" id="result-m3-last-name" value=""placeholder="Voornaam Achternaam">
+					<input type="text" id="input-m3-first-name" value="Kevin Felix" placeholder="Voornaam Achternaam">
+					<input type="text" id="input-m3-last-name" value=""placeholder="Voornaam Achternaam">
 				</div>
 
 				<p>
@@ -326,7 +384,7 @@
 			<hr>
 		</section>
 
-		<section class="minimized">
+		<section class="minimized" id="section-m4">
 			<button class="minimize"></button>
 			<h3><strong>M4:</strong> Array</h3>
 
@@ -356,7 +414,7 @@
 			<hr>
 		</section>
 
-		<section class="minimized">
+		<section class="minimized" id="section-m5">
 			<button class="minimize"></button>
 			<h3><strong>M5:</strong> Controlestructuren & Lussen</h3>
 
@@ -387,7 +445,7 @@
 			<hr>
 		</section>
 
-		<section class="minimized">
+		<section class="minimized" id="section-m6">
 			<button class="minimize"></button>
 			<h3><strong>M6:</strong> Strings & Functies</h3>
 
@@ -447,11 +505,11 @@
 		</section>
 	</article>
 
-	<article class="minimized" name="m1-hard">
+	<article class="minimized" id="m1-hard">
 		<button class="minimize"></button>
 		<h2>Hard</h2>
 
-		<section class="minimized">
+		<section class="minimized" id="section-h1">
 			<button class="minimize"></button>
 			<h3><strong>H1:</strong> Arrays</h3>
 
@@ -468,7 +526,7 @@
 			<hr>
 		</section>
 
-		<section class="minimized">
+		<section class="minimized" id="section-h2">
 			<button class="minimize"></button>
 			<h3><strong>H2:</strong> Arrays</h3>
 
@@ -485,7 +543,7 @@
 			<hr>
 		</section>
 
-		<section class="minimized">
+		<section class="minimized" id="section-h3">
 			<button class="minimize"></button>
 			<h3><strong>H3:</strong> Arrays</h3>
 
@@ -504,11 +562,11 @@
 		</section>
 	</article>
 
-	<article name="m1-challenge">
+	<article class="minimized" id="m1-challenge">
 		<button class="minimize"></button>
 		<h2>Challenge@home</h2>
 
-		<section class="minimized">
+		<section class="minimized" id="section-c1">
 			<button class="minimize"></button>
 			<h3><strong>@1:</strong> convertTextToNumber</h3>
 
@@ -522,13 +580,13 @@
 
 			<section class="results-container">
 				<p>
-					De text, <span id="textToConvert" data-value="een;vier;zes;zeven"></span>, geconverteerd naar een getal is: <span id="result-c1"></span>
+					De text, <span id="input-c1-textToConvert" data-value="een;vier;zes;zeven"></span>, geconverteerd naar een getal is: <span id="result-c1"></span>
 				</p>
 			</section>
 			<hr>
 		</section>
 
-		<section class="minimized">
+		<section class="minimized" id="section-c2">
 			<button class="minimize"></button>
 			<h3><strong>@2:</strong> Fibonacci</h3>
 
@@ -549,7 +607,7 @@
 			<hr>
 		</section>
 
-		<section>
+		<section class="minimized" id="section-c3">
 			<button class="minimize"></button>
 			<h3><strong>@3:</strong> Veelvouden</h3>
 
@@ -572,7 +630,6 @@ veelvoud(13) => 13 is geen veelvoud van 2, het dichtste veelvoud is 16, 2^4</p>
 			<hr>
 		</section>
 	</article>
-
 </body>
 
 <script src="init.js"></script>

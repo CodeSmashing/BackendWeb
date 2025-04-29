@@ -1,12 +1,15 @@
 const minimizedElementList = document.querySelectorAll(".minimized");
 const minimizeButtonList = document.querySelectorAll(".minimize");
-const assignment = document.querySelector("#assignment").value;
-const radius = document.querySelector("#radius");
-const rectangleSide1 = document.querySelector("#rectangleSide1");
-const rectangleSide2 = document.querySelector("#rectangleSide2");
-const squareSide = document.querySelector("#squareSide");
-const triangleBase = document.querySelector("#triangleBase");
-const triangleHeight = document.querySelector("#triangleHeight");
+const asideElement = document.querySelector("aside");
+const maxWidth = document.documentElement.clientWidth;
+const mouseXThresholdLarge = maxWidth * 0.25;
+const mouseXThresholdSmall = maxWidth * 0.1;
+const inputRadius = document.querySelector("#input-e1-radius");
+const inputRecSideA = document.querySelector("#input-e2-recSideA");
+const inputRecSideB = document.querySelector("#input-e2-recSideB");
+const inputSquareSide = document.querySelector("#input-e2-squareSide");
+const inputTriangleBase = document.querySelector("#input-e2-triangleBase");
+const inputTriangleHeight = document.querySelector("#input-e2-triangleHeight");
 const resultE1 = document.querySelector("#result-e1");
 const resultE2A = document.querySelector("#result-e2-a");
 const resultE2B = document.querySelector("#result-e2-b");
@@ -18,8 +21,8 @@ const resultE6 = document.querySelector("#result-e6");
 const resultM1 = document.querySelector("#result-m1");
 const resultM2 = document.querySelector("#result-m2");
 const resultM3 = document.querySelector("#result-m3");
-const resultM3FirstInput = document.querySelector("#result-m3-first-name");
-const resultM3LastInput = document.querySelector("#result-m3-last-name");
+const inputFirstName = document.querySelector("#input-m3-first-name");
+const inputLastName = document.querySelector("#input-m3-last-name");
 const resultM4A = document.querySelector("#result-m4-a");
 const resultM4B = document.querySelector("#result-m4-b");
 const resultM5 = document.querySelector("#result-m5");
@@ -31,11 +34,12 @@ const resultH2B = document.querySelector("#result-h2-b");
 const resultH3A = document.querySelector("#result-h3-a");
 const resultH3B = document.querySelector("#result-h3-b");
 const resultC1 = document.querySelector("#result-c1");
-const textToConvert = document.querySelector("#textToConvert");
+const inputTextToConvert = document.querySelector("#input-c1-textToConvert");
 const resultC2A = document.querySelector("#result-c2-a");
 const resultC2B = document.querySelector("#result-c2-b");
 const resultC3A = document.querySelector("#result-c3-a");
 const resultC3B = document.querySelector("#result-c3-b");
+let assignment = document.querySelector("#assignment").value;
 
 minimizedElementList.forEach((element) => {
 	element.scrollTop = 0;
@@ -45,26 +49,115 @@ minimizeButtonList.forEach((button) => {
 	button.addEventListener("click", toggleMinimization);
 });
 
-[resultM3FirstInput, resultM3LastInput].forEach((button) =>
+[inputFirstName, inputLastName].forEach((button) =>
 	button.addEventListener("keydown", (event) => {
 		if (event.key === "Enter") updateResults();
 	})
 );
 
-radius.textContent = radius.dataset.value;
-rectangleSide1.textContent = rectangleSide1.dataset.value;
-rectangleSide2.textContent = rectangleSide2.dataset.value;
-squareSide.textContent = squareSide.dataset.value;
-triangleBase.textContent = triangleBase.dataset.value;
-triangleHeight.textContent = triangleHeight.dataset.value;
-textToConvert.textContent = '\"' + textToConvert.dataset.value + '\"';
+document.addEventListener("mousemove", handleAsideVisibility);
+asideElement.addEventListener("click", handleAsideClick);
+
+inputRadius.textContent = inputRadius.dataset.value;
+inputRecSideA.textContent = inputRecSideA.dataset.value;
+inputRecSideB.textContent = inputRecSideB.dataset.value;
+inputSquareSide.textContent = inputSquareSide.dataset.value;
+inputTriangleBase.textContent = inputTriangleBase.dataset.value;
+inputTriangleHeight.textContent = inputTriangleHeight.dataset.value;
+inputTextToConvert.textContent = '\"' + inputTextToConvert.dataset.value + '\"';
 resultC2A.textContent = resultC2A.dataset.value;
+
+function handleAsideVisibility(event) {
+	const mouseX = event.clientX;
+    const classList = asideElement.classList;
+
+	const showAside = () => {
+		classList.add("show");
+		classList.remove("hidden", "hidden-transition");
+	};
+
+	const hideAside = () => {
+		classList.add("hidden");
+		classList.remove("show", "hidden-transition");
+	};
+
+	const transitionAside = () => {
+		classList.add("hidden-transition");
+		classList.remove("show", "hidden");
+	};
+
+	// Cursor is hovering over the aside
+	if (mouseX <= asideElement.clientWidth) {
+		showAside();
+		return;
+	}
+
+	// Cursor is hovering over the large target
+	if (mouseX <= mouseXThresholdLarge && mouseX > mouseXThresholdSmall) {
+		transitionAside();
+		return;
+	}
+
+	// Cursor is hovering over the small target
+	if (mouseX <= mouseXThresholdSmall) {
+		showAside();
+		return;
+	}
+	
+	// Cursor isn't hovering over any target
+	hideAside();
+}
+
+function handleAsideClick(event) {
+	const anchor = event.target.closest("a");
+	if (!anchor) return;
+
+	const sectionId = anchor.hash ? anchor.hash.slice(1) : null;
+	if (!sectionId) return;
+
+	const section = document.querySelector(`#${sectionId}`);
+    if (!section) return;
+
+	const article = section.parentElement;
+    if (!article) return;
+
+	const articleList = Array.from(document.querySelectorAll(`& > article:not([id=${article.id}])`));
+	const sectionList = Array.from(article.querySelectorAll(`& > section:not([id=${sectionId}])`));
+
+	updateAssignment(sectionId);
+	maximize([article, section]);
+	minimize(articleList);
+	minimize(sectionList);
+}
+
+function minimize(list) {
+	list.forEach((item) => {
+		if (!item.classList.contains("minimized")) item.classList.add("minimized");
+		item.scrollTop = 0;
+	});
+}
+
+function maximize(list) {
+	list.forEach((item) => {
+		item.classList.remove("minimized");
+		item.scrollTop = 0;
+	});
+}
 
 function toggleMinimization(event) {
 	const button = event.target;
 	const parent = button.parentElement;
 	parent.classList.toggle("minimized");
 	parent.scrollTop = 0;
+
+	if (parent.tagName === "SECTION" && !parent.classList.contains("minimized")) {
+		updateAssignment(parent.id);
+	}
+}
+
+function updateAssignment(id) {
+	assignment = id.substring(id.indexOf("-") + 1);
+	updateResults();
 }
 
 async function processAssignment(assignment = undefined, info = {}) {
@@ -106,18 +199,18 @@ async function updateResults() {
 	try {
 		switch (assignment) {
 			case "e1":
-				info.radius = parseFloat(Number(radius.dataset.value));
+				info.radius = parseFloat(Number(inputRadius.dataset.value));
 				if (isNaN(info.radius)) return console.warn("There was a non-valid radius given.");
 
 				data = await processAssignment(assignment, info);
 				resultE1.textContent = data && data.surfaceAreaCirkel ? data.surfaceAreaCirkel : "N/A";
 				break;
 			case "e2":
-				info.rectangleSide1 = parseFloat(Number(rectangleSide1.dataset.value));
-				info.rectangleSide2 = parseFloat(Number(rectangleSide2.dataset.value));
-				info.squareSide = parseFloat(Number(squareSide.dataset.value));
-				info.triangleBase = parseFloat(Number(triangleBase.dataset.value));
-				info.triangleHeight = parseFloat(Number(triangleHeight.dataset.value));
+				info.recSideA = parseFloat(Number(inputRecSideA.dataset.value));
+				info.recSideB = parseFloat(Number(inputRecSideB.dataset.value));
+				info.squareSide = parseFloat(Number(inputSquareSide.dataset.value));
+				info.triangleBase = parseFloat(Number(inputTriangleBase.dataset.value));
+				info.triangleHeight = parseFloat(Number(inputTriangleHeight.dataset.value));
 				if (Object.values(info).some((value) => isNaN(value))) return console.warn("There was a non-valid side given.");
 
 				data = await processAssignment(assignment, info);
@@ -126,11 +219,11 @@ async function updateResults() {
 				resultE2C.textContent = data && data.surfaceAreaTriangle ? `${data.surfaceAreaTriangle}cm²` : "N/A";
 				break;
 			case "e3":
-				info.rectangleSide1 = parseFloat(Number(rectangleSide1.dataset.value));
-				info.rectangleSide2 = parseFloat(Number(rectangleSide2.dataset.value));
-				info.squareSide = parseFloat(Number(squareSide.dataset.value));
-				info.triangleBase = parseFloat(Number(triangleBase.dataset.value));
-				info.triangleHeight = parseFloat(Number(triangleHeight.dataset.value));
+				info.recSideA = parseFloat(Number(inputRecSideA.dataset.value));
+				info.recSideB = parseFloat(Number(inputRecSideB.dataset.value));
+				info.squareSide = parseFloat(Number(inputSquareSide.dataset.value));
+				info.triangleBase = parseFloat(Number(inputTriangleBase.dataset.value));
+				info.triangleHeight = parseFloat(Number(inputTriangleHeight.dataset.value));
 				if (Object.values(info).some((value) => isNaN(value))) return console.warn("There was a non-valid side given.");
 
 				data = await processAssignment(assignment, info);
@@ -179,8 +272,8 @@ async function updateResults() {
 				break;
 			case "m3":
 				// Sanitize the input to prevent unexpected behavior
-				const firstInput = resultM3FirstInput ? resultM3FirstInput.value.replace(/[^a-zA-Z0-9 ]/g, "").trim() : "";
-				const lastInput = resultM3LastInput ? resultM3LastInput.value.replace(/[^a-zA-Z0-9 ]/g, "").trim() : "";
+				const firstInput = inputFirstName ? inputFirstName.value.replace(/[^a-zA-Z0-9 ]/g, "").trim() : "";
+				const lastInput = inputLastName ? inputLastName.value.replace(/[^a-zA-Z0-9 ]/g, "").trim() : "";
 
 				if (firstInput && lastInput) {
 					if ([firstInput, lastInput].some((input) => input.includes(" "))) return console.warn("If both inputs are given, neither should contain spaces.");
@@ -298,7 +391,7 @@ async function updateResults() {
 				resultH3B.innerHTML = htmlString;
 				break;
 			case "c1":
-				info.inputString = textToConvert.dataset.value;
+				info.inputString = inputTextToConvert.dataset.value;
 
 				data = await processAssignment(assignment, info);
 				if (!data || !data.textToNumber) return console.warn("No data returned from the server.");

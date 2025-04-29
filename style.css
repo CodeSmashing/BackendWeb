@@ -9,6 +9,7 @@
 	--default-background-hover: var(--color-shadow);
 	--background-body: var(--color-primary);
 	--background-article: var(--color-primary);
+	--background-aside: var(--color-secondary);
 	--background-minimized: var(--color-secondary);
 	--background-button: color-mix(in srgb, var(--color-primary), var(--color-shadow) 80%);
 	--background-code: #000000;
@@ -33,6 +34,7 @@
 }
 
 body {
+	position: relative;
 	display: flex;
 	min-height: 100%;
 	flex-flow: wrap;
@@ -123,6 +125,7 @@ article {
 	overflow-y: scroll;
 	box-shadow: 0px 0px 50px -20px rgba(0, 0, 0, 0.5) inset;
 	width: 100%;
+	margin-inline: 20px;
 
 	h2 {
 		margin-top: -5px;
@@ -136,6 +139,89 @@ article {
 section {
 	h3 {
 		margin-top: 10px;
+	}
+}
+
+aside {
+	position: fixed;
+	display: flex;
+	left: 0;
+	top: 0;
+	padding: 40px;
+	height: 100%;
+	max-height: calc(100vh - 80px);
+	width: 100%;
+	max-width: 25vw;
+	background-color: var(--background-aside);
+	box-shadow: 0px 3px 18px -6px rgba(0, 0, 0, 01);
+	z-index: 1;
+
+	ul {
+		flex: 1;
+		gap: 20px;
+		display: flex;
+		flex-direction: column;
+		list-style-type: none;
+		padding-left: 0;
+		margin: 0;
+		overflow-y: scroll;
+		opacity: 0;
+		transition: opacity 0.4s;
+	}
+
+	&.show {
+		animation-name: show;
+		animation-duration: 0.5s;
+		animation-fill-mode: forwards;
+
+		ul {
+			opacity: 1;
+		}
+	}
+
+	&.hidden {
+		animation-name: hidden-transition-reverse;
+		animation-duration: 0.5s;
+		animation-fill-mode: forwards;
+	}
+
+	&.hidden-transition {
+		animation-name: hidden-transition;
+		animation-duration: 0.5s;
+		animation-fill-mode: forwards;
+	}
+}
+
+@keyframes show {
+	from {
+		padding-inline: 5px;
+		width: 10px;
+	}
+	to {
+		padding: 40px;
+		width: 100%;
+	}
+}
+
+@keyframes hidden-transition {
+	from {
+		padding-inline: 5px;
+		width: 10px;
+	}
+	to {
+		padding-inline: 20px;
+		width: 10px;
+	}
+}
+
+@keyframes hidden-transition-reverse {
+	from {
+		padding-inline: 20px;
+		width: 10px;
+	}
+	to {
+		padding-inline: 5px;
+		width: 10px;
 	}
 }
 
