@@ -1,10 +1,13 @@
 const minimizedElementList = document.querySelectorAll(".minimized");
 const minimizeButtonList = document.querySelectorAll(".minimize");
+const formList = document.querySelectorAll("form");
 const asideElement = document.querySelector("aside");
 const maxWidth = document.documentElement.clientWidth;
-const mouseXThresholdLarge = maxWidth * 0.25;
-const mouseXThresholdSmall = maxWidth * 0.1;
-const resultE1 = document.querySelector("#result-e1");
+const mouseXThresholdLarge = 200;
+const mouseXThresholdSmall = 20;
+const resultE1A = document.querySelector("#result-e1-a");
+const resultE1B = document.querySelector("#result-e1-b");
+const resultE1C = document.querySelector("#result-e1-c");
 const resultE2 = document.querySelector("#result-e2");
 const resultE3 = document.querySelector("#result-e3");
 const resultE4 = document.querySelector("#result-e4");
@@ -22,6 +25,10 @@ minimizedElementList.forEach((element) => {
 minimizeButtonList.forEach((button) => {
 	button.addEventListener("click", toggleMinimization);
 });
+
+formList.forEach((form) => {
+	form.addEventListener("submit", submitForm);
+})
 
 document.addEventListener("mousemove", handleAsideVisibility);
 asideElement.addEventListener("click", handleAsideClick);
@@ -119,9 +126,72 @@ function updateAssignment(id) {
 	updateResults();
 }
 
-async function processAssignment(assignment = undefined, info = {}) {
-	if (!assignment) return console.warn("processAssignment: No assignment identifier provided.");
+function validateForm(form) {
+	// Check if form input meets required conditions before sending it to process.php
+	const inputs = Array.from(form.querySelectorAll("input"));
+	
+	const selectorUsername = inputs.find((input) => input.id.includes("-username"));
+	const selectorPassword = inputs.find((input) => input.id.includes("-password") && input.id.slice(-1) !== "-");
+	const selectorPasswordConfirm = inputs.find((input) => input.id.includes("-confirm"));
+
+	const inputUsername = selectorUsername.value.trim();
+	const inputPassword = selectorPassword.value.trim();
+	const inputPasswordConfirm = selectorPasswordConfirm ? selectorPasswordConfirm.value.trim() : undefined;
+
+	const regExpUsername = /^(?=.*[\w.])[\w.]{4,25}$/;
+	const regExpPassword = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,64}$/;
+
+	if (inputUsername == undefined || regExpUsername.test(inputUsername) === false) {
+		selectorUsername.classList.add("error");
+		return false;
+	}
+
+	if (inputPassword == undefined || regExpPassword.test(inputPassword) === false) {
+		selectorPassword.classList.add("error");
+		return false;
+	}
+
+	if (selectorPasswordConfirm) {
+		if (inputPasswordConfirm == undefined || regExpPassword.test(inputPasswordConfirm) === false) {
+			selectorPassword.classList.add("error");
+			selectorPasswordConfirm.classList.add("error");
+			return false;
+		}
+
+		if (inputPassword !== inputPasswordConfirm) {
+			selectorPassword.classList.add("error");
+			selectorPasswordConfirm.classList.add("error");
+			return false;
+		}
+	}
+
+	return {inputUsername, inputPassword};
+}
+
+function submitForm(event) {
+	event.preventDefault();
+	const form = event.target;
+	const action = event.submitter.dataset.action;
+	const actionMessages = {
+		"sign-in": "Requesting sign in...",
+		"sign-up": "Requesting sign up...",
+		"password-reset": "Requesting password reset...",
+	};
+	const validationResults = validateForm(form);
+
+	if (!validationResults) {
+		return console.warn("Form was incorrectly filled in.");
+	}
+
+	updateResults({message: actionMessages[action], action, username: validationResults.inputUsername, password: validationResults.inputPassword });
+	form.reset();
+}
+
+async function sendRequest(assignment = undefined, info = {}) {
+	if (!assignment) return console.warn("sendRequest: No assignment identifier provided.");
 	console.info(`Working on assignment ${assignment}...`);
+
+	if (info.message) console.info(info.message);
 
 	return fetch("process.php", {
 		method: "POST",
@@ -149,8 +219,7 @@ async function processAssignment(assignment = undefined, info = {}) {
 		});
 }
 
-async function updateResults() {
-	let info = {};
+async function updateResults(info = {}) {
 	let data = {};
 	let htmlString = "";
 
@@ -158,31 +227,39 @@ async function updateResults() {
 	try {
 		switch (assignment) {
 			case "e1":
-				data = await processAssignment(assignment, info);
+				if (!info.username || !info.password) return console.warn("Username and password are needed.");
+				
+				data = await sendRequest(assignment, info);
+				if (!data) return console.warn("No data returned from the server.");
+				if (!data.success) return console.warn(`${data.exitReason}: ${data.serverMessage}`);
+
+				resultE1A.textContent = info.username;
+				resultE1B.textContent = info.password;
+				resultE1C.textContent = data.hash;
 				break;
 			case "e2":
-				data = await processAssignment(assignment, info);
+				data = await sendRequest(assignment, info);
 				break;
 			case "e3":
-				data = await processAssignment(assignment, info);
+				data = await sendRequest(assignment, info);
 				break;
 			case "e4":
-				data = await processAssignment(assignment, info);
+				data = await sendRequest(assignment, info);
 				break;
 			case "m1":
-				data = await processAssignment(assignment, info);
+				data = await sendRequest(assignment, info);
 				break;
 			case "m2":
-				data = await processAssignment(assignment, info);
+				data = await sendRequest(assignment, info);
 				break;
 			case "m3":
-				data = await processAssignment(assignment, info);
+				data = await sendRequest(assignment, info);
 				break;
 			case "h1":
-				data = await processAssignment(assignment, info);
+				data = await sendRequest(assignment, info);
 				break;
 			case "c1":
-				data = await processAssignment(assignment, info);
+				data = await sendRequest(assignment, info);
 				break;
 			default:
 				console.warn(`We haven't implemented the assignment ${assignment} yet.`);

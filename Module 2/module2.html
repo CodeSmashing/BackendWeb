@@ -66,7 +66,26 @@
 </div>
 
 			<section class="results-container">
-				<span id="result-e1"></span>
+				<form id="form-e1" method="post">
+					<label for="sign-up-username">Gebruikersnaam:</label>
+					<input type="text" title="You need between 4 and 25 alphanumeric characters. Only letters, digits, underscores, and periods are allowed. No other characters (such as spaces or special symbols) are permitted" id="sign-up-username" placeholder="Uw gebruikersnaam, bv. TomBradysLover" minlength="4" maxlength="25" pattern="^(?=.*[\w.])[\w.]{4,25}$" required>
+
+					<label for="sign-up-password">Password:</label>
+					<input type="password" title="You need between 8 and 64 alphanumeric characters and at least: one upper case, one lower case, one digit, and one of the following special characters: !@#$%^&*" id="sign-up-password" placeholder="Uw paswoord" minlength="8" maxlength="64" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,64}$" required>
+
+					<button type="submit" data-action="sign-up">Verstuur</button>
+					<button type="reset">Reset</button>
+				</form>
+
+				<p>
+					De username is <span id="result-e1-a"></span>
+				</p>
+				<p>
+					Het paswoord is <span id="result-e1-b"></span>
+				</p>
+				<p>
+					De hash is <span id="result-e1-c"></span>
+				</p>
 			</section>
 			<hr>
 		</section>

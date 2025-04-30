@@ -102,6 +102,12 @@ hr {
 	margin: 40px 0;
 }
 
+label {
+	cursor: pointer;
+	margin-block: 20px;
+	padding: 10px;
+}
+
 input {
 	border: none;;
 	font-size: large;
@@ -110,7 +116,43 @@ input {
 	color: var(--default-text);
 	margin-block: 20px;
 	padding: 10px;
-	width: 100%;
+	width: -moz-available;
+
+	&.error {
+		background-color: var(--background-input-error);
+	}
+}
+
+button {
+	cursor: pointer;
+	border: none;
+	border-radius: 10px;
+	font-size: large;
+	font-family: Arial, sans-serif;
+	background-color: var(--background-button);
+	color: var(--default-text);
+	padding: 10px;
+	margin-block: 20px;
+	width: 200px;
+	transition: border-radius 0.2s;
+
+	&.minimize {
+		position: absolute;
+		border-radius: 5px;
+		right: 40px;
+		padding: 10px 40px;
+		margin-top: 20px;
+		width: fit-content;
+	}
+
+	&:hover {
+		background-color: var(--default-background-hover);
+		box-shadow: 0 0 0 3px var(--box-shadow);
+
+		&:not(.minimize) {
+			border-radius: 5px;
+		}
+	}
 }
 
 section,
@@ -140,6 +182,10 @@ section {
 	h3 {
 		margin-top: 10px;
 	}
+}
+
+form {
+	padding-block: 20px;
 }
 
 aside {
@@ -243,22 +289,6 @@ td {
 
 	>*:not(.minimize, h3, h2) {
 		display: none;
-	}
-}
-
-.minimize {
-	position: absolute;
-	right: 40px;
-	background-color: var(--background-button);
-	border: none;
-	padding: 10px 40px;
-	cursor: pointer;
-	border-radius: 5px;
-	margin-top: 20px;
-
-	&:hover {
-		background-color: var(--default-background-hover);
-		box-shadow: 0 0 0 3px var(--box-shadow);
 	}
 }
 
