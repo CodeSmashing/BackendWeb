@@ -16,6 +16,7 @@
 	--background-results: var(--color-secondary);
 	--background-horizontal: color-mix(in srgb, var(--color-text), var(--color-shadow) 60%);
 	--background-input: var(--color-primary);
+	--background-input-error: color-mix(in srgb, var(--color-primary) 92%, red);
 
 	/* Color palette text */
 	--default-text: var(--color-text);

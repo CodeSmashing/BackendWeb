@@ -10,7 +10,7 @@
 </head>
 
 <body>
-	<input type="hidden" id="assignment" value="e1" disabled>
+	<input type="hidden" id="assignment" value="e3" disabled>
 	<aside class="hidden">
 		<ul>
 			<li>
@@ -67,24 +67,24 @@
 
 			<section class="results-container">
 				<form id="form-e1" method="post">
-					<label for="sign-up-username">Gebruikersnaam:</label>
-					<input type="text" title="You need between 4 and 25 alphanumeric characters. Only letters, digits, underscores, and periods are allowed. No other characters (such as spaces or special symbols) are permitted" id="sign-up-username" placeholder="Uw gebruikersnaam, bv. TomBradysLover" minlength="4" maxlength="25" pattern="^(?=.*[\w.])[\w.]{4,25}$" required>
+					<label for="input-e1-username">Gebruikersnaam:</label>
+					<input type="text" title="You need between 4 and 25 alphanumeric characters. Only letters, digits, underscores, and periods are allowed. No other characters (such as spaces or special symbols) are permitted" id="input-e1-username" placeholder="Uw gebruikersnaam, bv. TomBradysLover" minlength="4" maxlength="25" pattern="^(?=.*[\w.])[\w.]{4,25}$" required>
 
-					<label for="sign-up-password">Password:</label>
-					<input type="password" title="You need between 8 and 64 alphanumeric characters and at least: one upper case, one lower case, one digit, and one of the following special characters: !@#$%^&*" id="sign-up-password" placeholder="Uw paswoord" minlength="8" maxlength="64" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,64}$" required>
+					<label for="input-e1-password">Password:</label>
+					<input type="password" title="You need between 8 and 64 alphanumeric characters and at least: one upper case, one lower case, one digit, and one of the following special characters: !@#$%^&*" id="input-e1-password" placeholder="Uw paswoord" minlength="8" maxlength="64" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,64}$" required>
 
-					<button type="submit" data-action="sign-up">Verstuur</button>
+					<button type="submit" data-action="data-submission">Verstuur</button>
 					<button type="reset">Reset</button>
 				</form>
 
 				<p>
-					De username is <span id="result-e1-a"></span>
+					De username is: <span id="output-e1-username">...</span>
 				</p>
 				<p>
-					Het paswoord is <span id="result-e1-b"></span>
+					Het paswoord is: <span id="output-e1-password">...</span>
 				</p>
 				<p>
-					De hash is <span id="result-e1-c"></span>
+					De hash is: <span id="output-e1-hash">...</span>
 				</p>
 			</section>
 			<hr>
@@ -114,20 +114,18 @@
 						Voeg validatie toe:
 					</p>
 				</li>
-				<li>
-					<ul>
-						<li>
-							<p>
-								Controleer of beide velden ingevuld zijn.
-							</p>
-						</li>
-						<li>
-							<p>
-								De lengte van de username moet minstens 6 karakters zijn.
-							</p>
-						</li>
-					</ul>
-				</li>
+				<ul>
+					<li>
+						<p>
+							Controleer of beide velden ingevuld zijn.
+						</p>
+					</li>
+					<li>
+						<p>
+							De lengte van de username moet minstens 6 karakters zijn.
+						</p>
+					</li>
+				</ul>
 			</ul>
 
 			<p>
@@ -135,7 +133,32 @@
 			</p>
 
 			<section class="results-container">
-				<span id="result-e2"></span>
+				<form id="form-e2" method="post">
+					<label for="input-e2-username">Gebruikersnaam:</label>
+					<input type="text" title="You need between 4 and 25 alphanumeric characters. Only letters, digits, underscores, and periods are allowed. No other characters (such as spaces or special symbols) are permitted" id="input-e2-username" placeholder="Uw gebruikersnaam, bv. TomBradysLover" minlength="4" maxlength="25" pattern="^(?=.*[\w.])[\w.]{4,25}$" required>
+
+					<label for="input-e2-password">Password:</label>
+					<input type="password" title="You need between 8 and 64 alphanumeric characters and at least: one upper case, one lower case, one digit, and one of the following special characters: !@#$%^&*" id="input-e2-password" placeholder="Uw paswoord" minlength="8" maxlength="64" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,64}$" required>
+
+					<label for="input-e2-country">Land:</label>
+					<input type="text" title="Vul een geldige landnaam in (alleen letters, spaties, streepjes en apostrof, 2-40 tekens)" id="input-e2-country" placeholder="Uw land van afkomst" pattern="^[A-Za-zÀ-ÿ\s\-']{2,40}$">
+
+					<button type="submit" data-action="data-submission">Verstuur</button>
+					<button type="reset">Reset</button>
+				</form>
+
+				<p>
+					De username is: <span id="output-e2-username">...</span>
+				</p>
+				<p>
+					Het paswoord is: <span id="output-e2-password">...</span>
+				</p>
+				<p>
+					De hash is: <span id="output-e2-hash">...</span>
+				</p>
+				<p>
+					Het land is: <span id="output-e2-country">...</span>
+				</p>
 			</section>
 			<hr>
 		</section>
@@ -212,7 +235,7 @@
 			</p>
 
 			<section class="results-container">
-				<span id="result-e3"></span>
+				<span id="output-e3"></span>
 			</section>
 			<hr>
 		</section>
@@ -277,7 +300,7 @@
 			</p>
 
 			<section class="results-container">
-				<span id="result-e4"></span>
+				<span id="output-e4"></span>
 			</section>
 			<hr>
 		</section>
@@ -313,7 +336,7 @@
 			</p>
 
 			<section class="results-container">
-				<span id="result-m1"></span>
+				<span id="output-m1"></span>
 			</section>
 			<hr>
 		</section>
@@ -335,7 +358,7 @@
 			</p>
 
 			<section class="results-container">
-				<span id="result-m2"></span>
+				<span id="output-m2"></span>
 			</section>
 			<hr>
 		</section>
@@ -375,7 +398,7 @@
 			</p>
 
 			<section class="results-container">
-				<span id="result-m3"></span>
+				<span id="output-m3"></span>
 			</section>
 			<hr>
 		</section>
@@ -439,7 +462,7 @@
 			</ul>
 
 			<section class="results-container">
-				<span id="result-h1"></span>
+				<span id="output-h1"></span>
 			</section>
 			<hr>
 		</section>
@@ -473,7 +496,7 @@
 				</li>
 				<li>
 					<p>
-						Indien we een post request krijgen, valideren we de formulier data. 
+						Indien we een post request krijgen, valideren we de formulier data.
 					</p>
 				</li>
 				<ul>
@@ -662,7 +685,7 @@
 			</ul>
 
 			<section class="results-container">
-				<span id="result-c1"></span>
+				<span id="output-c1"></span>
 			</section>
 			<hr>
 		</section>

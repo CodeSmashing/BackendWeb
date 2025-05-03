@@ -5,17 +5,6 @@ const asideElement = document.querySelector("aside");
 const maxWidth = document.documentElement.clientWidth;
 const mouseXThresholdLarge = 200;
 const mouseXThresholdSmall = 20;
-const resultE1A = document.querySelector("#result-e1-a");
-const resultE1B = document.querySelector("#result-e1-b");
-const resultE1C = document.querySelector("#result-e1-c");
-const resultE2 = document.querySelector("#result-e2");
-const resultE3 = document.querySelector("#result-e3");
-const resultE4 = document.querySelector("#result-e4");
-const resultM1 = document.querySelector("#result-m1");
-const resultM2 = document.querySelector("#result-m2");
-const resultM3 = document.querySelector("#result-m3");
-const resultH1 = document.querySelector("#result-h1");
-const resultC1 = document.querySelector("#result-c1");
 let assignment = document.querySelector("#assignment").value;
 
 minimizedElementList.forEach((element) => {
@@ -28,54 +17,61 @@ minimizeButtonList.forEach((button) => {
 
 formList.forEach((form) => {
 	form.addEventListener("submit", submitForm);
-})
+});
 
+// Should probably debounce "mousemove"
 document.addEventListener("mousemove", handleAsideVisibility);
 asideElement.addEventListener("click", handleAsideClick);
+asideElement.dispatchEvent(new Event("click", { bubbles: true, cancelable: false }));
+
+function showAside(classList) {
+	if (!classList) return console.warn("showAside: No classList provided");
+	classList.add("show");
+	classList.remove("hidden", "hidden-transition");
+}
+
+function hideAside(classList) {
+	if (!classList) return console.warn("hideAside: No classList provided");
+	classList.add("hidden");
+	classList.remove("show", "hidden-transition");
+}
+
+function transitionAside(classList) {
+	if (!classList) return console.warn("transitionAside: No classList provided");
+	classList.add("hidden-transition");
+	classList.remove("show", "hidden");
+}
 
 function handleAsideVisibility(event) {
 	const mouseX = event.clientX;
     const classList = asideElement.classList;
 
-	const showAside = () => {
-		classList.add("show");
-		classList.remove("hidden", "hidden-transition");
-	};
-
-	const hideAside = () => {
-		classList.add("hidden");
-		classList.remove("show", "hidden-transition");
-	};
-
-	const transitionAside = () => {
-		classList.add("hidden-transition");
-		classList.remove("show", "hidden");
-	};
-
 	// Cursor is hovering over the aside
 	if (mouseX <= asideElement.clientWidth) {
-		showAside();
+		showAside(classList);
 		return;
 	}
 
 	// Cursor is hovering over the large target
 	if (mouseX <= mouseXThresholdLarge && mouseX > mouseXThresholdSmall) {
-		transitionAside();
+		transitionAside(classList);
 		return;
 	}
 
 	// Cursor is hovering over the small target
 	if (mouseX <= mouseXThresholdSmall) {
-		showAside();
+		showAside(classList);
 		return;
 	}
-	
+
 	// Cursor isn't hovering over any target
-	hideAside();
+	hideAside(classList);
 }
 
 function handleAsideClick(event) {
-	const anchor = event.target.closest("a");
+	const anchor = event.target !== asideElement ?
+		event.target.closest("a") :
+		asideElement.querySelector(`a[href$="-${assignment}"]`);
 	if (!anchor) return;
 
 	const sectionId = anchor.hash ? anchor.hash.slice(1) : null;
@@ -90,10 +86,11 @@ function handleAsideClick(event) {
 	const articleList = Array.from(document.querySelectorAll(`& > article:not([id=${article.id}])`));
 	const sectionList = Array.from(article.querySelectorAll(`& > section:not([id=${sectionId}])`));
 
-	updateAssignment(sectionId);
+	updateAssignment(section);
 	maximize([article, section]);
 	minimize(articleList);
 	minimize(sectionList);
+	section.scrollIntoView();
 }
 
 function minimize(list) {
@@ -117,55 +114,42 @@ function toggleMinimization(event) {
 	parent.scrollTop = 0;
 
 	if (parent.tagName === "SECTION" && !parent.classList.contains("minimized")) {
-		updateAssignment(parent.id);
+		updateAssignment(parent);
 	}
 }
 
-function updateAssignment(id) {
-	assignment = id.substring(id.indexOf("-") + 1);
-	updateResults();
+function updateAssignment(element) {
+	assignment = element.id.match(/^.*-([emhc][0-9]{1,})(-)?.*$/)[1];
 }
 
 function validateForm(form) {
-	// Check if form input meets required conditions before sending it to process.php
-	const inputs = Array.from(form.querySelectorAll("input"));
-	
-	const selectorUsername = inputs.find((input) => input.id.includes("-username"));
-	const selectorPassword = inputs.find((input) => input.id.includes("-password") && input.id.slice(-1) !== "-");
-	const selectorPasswordConfirm = inputs.find((input) => input.id.includes("-confirm"));
+	const inputList = Array.from(form.querySelectorAll("input"));
+	const inputObjectList = {};
+	const regExpList = {
+		username: /^(?=.*[\w.])[\w.]{4,25}$/,
+		password: /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,64}$/,
+		country: /^[A-Za-zÀ-ÿ\s\-']{2,40}$/
+	};
 
-	const inputUsername = selectorUsername.value.trim();
-	const inputPassword = selectorPassword.value.trim();
-	const inputPasswordConfirm = selectorPasswordConfirm ? selectorPasswordConfirm.value.trim() : undefined;
+	for (const input of inputList) {
+		const field = input.id.replace(`input-${assignment}-`, "");
+		const value = input.value.trim() || null;
+		const isRequired = input.required;
+		const hasRegExp = regExpList[field] ? true : false;
+		let passedRegExp = null;
 
-	const regExpUsername = /^(?=.*[\w.])[\w.]{4,25}$/;
-	const regExpPassword = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,64}$/;
-
-	if (inputUsername == undefined || regExpUsername.test(inputUsername) === false) {
-		selectorUsername.classList.add("error");
-		return false;
-	}
-
-	if (inputPassword == undefined || regExpPassword.test(inputPassword) === false) {
-		selectorPassword.classList.add("error");
-		return false;
-	}
-
-	if (selectorPasswordConfirm) {
-		if (inputPasswordConfirm == undefined || regExpPassword.test(inputPasswordConfirm) === false) {
-			selectorPassword.classList.add("error");
-			selectorPasswordConfirm.classList.add("error");
-			return false;
+		if (hasRegExp && value !== null) {
+			passedRegExp = regExpList[field].test(value);
+		} else if (hasRegExp && value === null) {
+			passedRegExp = false;
+		} else {
+			passedRegExp = true;
 		}
 
-		if (inputPassword !== inputPasswordConfirm) {
-			selectorPassword.classList.add("error");
-			selectorPasswordConfirm.classList.add("error");
-			return false;
-		}
+		inputObjectList[field] = { isRequired, passedRegExp, value, input };
 	}
 
-	return {inputUsername, inputPassword};
+	return inputObjectList;
 }
 
 function submitForm(event) {
@@ -176,14 +160,30 @@ function submitForm(event) {
 		"sign-in": "Requesting sign in...",
 		"sign-up": "Requesting sign up...",
 		"password-reset": "Requesting password reset...",
+		"data-submission": "Requesting data submission...",
 	};
-	const validationResults = validateForm(form);
+	updateAssignment(form);
 
-	if (!validationResults) {
-		return console.warn("Form was incorrectly filled in.");
+	const validationResultList = validateForm(form);
+	const validResultList = {};
+
+	for (const [key, { isRequired, passedRegExp, selector, value }] of Object.entries(validationResultList)) {
+		if (isRequired) {
+			if (value === null) {
+				selector.classList.add("error");
+				return console.warn(`The ${key} input is required.`);
+			}
+
+			if (passedRegExp === false) {
+				selector.classList.add("error");
+				return console.warn(`The ${key} input did not meet the input requirements.`);
+			}
+		}
+
+		validResultList[key] = value;
 	}
 
-	updateResults({message: actionMessages[action], action, username: validationResults.inputUsername, password: validationResults.inputPassword });
+	updateResults(form.parentElement, form, { message: actionMessages[action], action, validResultList });
 	form.reset();
 }
 
@@ -211,7 +211,7 @@ async function sendRequest(assignment = undefined, info = {}) {
 			return response.json();
 		})
 		.then((response) => {
-			console.log("The response:", response);
+			console.info(`The response: ${response.exitCode.name} => ${response.exitCode.message}`);
 			return response;
 		})
 		.catch((error) => {
@@ -219,26 +219,37 @@ async function sendRequest(assignment = undefined, info = {}) {
 		});
 }
 
-async function updateResults(info = {}) {
+async function updateResults(section, form = undefined, info = {}) {
 	let data = {};
 	let htmlString = "";
 
 	if (!assignment || typeof assignment !== "string") return console.warn("Invalid or undefined assignment identifier.");
+	if (!section || typeof section !== "object") return console.warn("Invalid or undefined section provided.");
 	try {
 		switch (assignment) {
 			case "e1":
-				if (!info.username || !info.password) return console.warn("Username and password are needed.");
-				
+			case "e2":
+				if (!form || typeof form !== "object") return console.warn("Invalid or undefined form provided.");
+
 				data = await sendRequest(assignment, info);
 				if (!data) return console.warn("No data returned from the server.");
-				if (!data.success) return console.warn(`${data.exitReason}: ${data.serverMessage}`);
 
-				resultE1A.textContent = info.username;
-				resultE1B.textContent = info.password;
-				resultE1C.textContent = data.hash;
-				break;
-			case "e2":
-				data = await sendRequest(assignment, info);
+				for (const errorCode in data.errors) {
+					if (data.errors[errorCode].length > 0) {
+						for (const errorCase of data.errors[errorCode]) {
+							const field = errorCase.slice(errorCase.lastIndexOf("-") + 1);
+							const input = form.querySelector(`#input-${assignment}-${field}`);
+							if (input) input.classList.add("error");
+						}
+					}
+				}
+
+				for (const field in data.additionalData) {
+					const output = section.querySelector(`#output-${assignment}-${field}`);
+					if (output) {
+						output.textContent = data.additionalData[field] ? data.additionalData[field] : "...";
+					}
+				}
 				break;
 			case "e3":
 				data = await sendRequest(assignment, info);
@@ -269,5 +280,3 @@ async function updateResults(info = {}) {
 		return console.error("Error processing assignment:", error);
 	}
 }
-
-updateResults();
