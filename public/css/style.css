@@ -35,16 +35,20 @@
 }
 
 body {
-	position: relative;
-	display: flex;
 	min-height: 100%;
-	flex-flow: wrap;
 	font-size: large;
 	font-family: Arial, sans-serif;
 	background-color: var(--background-body);
 	color: var(--default-text);
 	margin: 0;
 	padding: 20px;
+}
+
+main {
+	position: relative;
+	display: flex;
+	flex-flow: wrap;
+	flex-direction: column;
 }
 
 h1,
@@ -167,7 +171,7 @@ article {
 	max-height: 70vh;
 	overflow-y: scroll;
 	box-shadow: 0px 0px 50px -20px rgba(0, 0, 0, 0.5) inset;
-	width: 100%;
+	width: auto;
 	margin-inline: 20px;
 
 	h2 {
@@ -192,6 +196,7 @@ form {
 aside {
 	position: fixed;
 	display: flex;
+	flex-direction: column;
 	left: 0;
 	top: 0;
 	padding: 40px;

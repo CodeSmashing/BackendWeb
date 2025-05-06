@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 class ModulePHPFundamentalsController extends Controller
 {
-	private static $PI = define("PI", 3.1415);
+	private const PI = 3.1415;
 	public static $functionsExecutedCounter = 0;
 
 	public static function calculateSurfaceAreaCirkel($radius): float {
 		global $functionsExecutedCounter;
 		$functionsExecutedCounter++;
-		$surfaceArea = PI * $radius * $radius;
+		$surfaceArea = ModulePHPFundamentalsController::PI * $radius * $radius;
 		return $surfaceArea;
 	}
 
